@@ -1,11 +1,27 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { CatFact } from '@/types/CatFact';
+import { getRandomCatFact } from '@/api/CatFact';
+import { useTheme } from '@react-navigation/native';
 
 export default function HomeScreen() {
+  const [catFact, setCatFact] = useState<CatFact | null>(null);
+  const { dark } = useTheme();
+
+  const handleGetCatFact = async () => {
+    const data = await getRandomCatFact();
+    setCatFact(data);
+  }
+
+  useEffect(() => {
+    handleGetCatFact();
+  }, []);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -50,6 +66,13 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 4: Get a cat fact</ThemedText>
+        <ThemedText>{catFact ? catFact.fact.substring(0, 100) : 'Get a cat fact'}</ThemedText>
+        <TouchableOpacity onPress={handleGetCatFact} style={[styles.button, { backgroundColor: dark ? '#014a7b' : '#61dafb' }]}>
+          <ThemedText>Get a cat fact</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
@@ -70,5 +93,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
