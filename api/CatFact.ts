@@ -2,12 +2,12 @@ import { CatFact } from "@/types/CatFact";
 
 const CatFactAPIEndpoint = "https://catfact.ninja/fact";
 
-export async function getRandomCatFact(): Promise<CatFact | null> {
-    const data: CatFact = await fetch(CatFactAPIEndpoint).then((res) => {
+export async function getRandomCatFact(): Promise<CatFact | undefined> {
+    const data: CatFact | undefined = await fetch(CatFactAPIEndpoint).then((res) => {
         if (!res.ok) {
-            return null;
+            return undefined;
         }
         return res.json();
-    }).catch(() => null);
+    }).catch(() => undefined);
     return data;
 }
