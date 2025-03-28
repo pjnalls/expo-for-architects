@@ -1,4 +1,4 @@
 export type CatFact = {
-    fact: string;
-    length: number;
+  fact: string;
+  length: number;
 };
