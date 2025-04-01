@@ -1,14 +1,14 @@
 import { Text, TouchableOpacity, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTheme } from '@react-navigation/native';
 
 import { getRandomCatFact } from '@/api/CatFact';
-import { CatFact } from '@/types/CatFact';
+import { useCatFact } from '@/contexts/CatFactContext';
 
 export default function CatFactView() {
-  const [catFact, setCatFact] = useState<CatFact | undefined>(undefined);
   const { dark } = useTheme();
   const themeStyle = dark ? { color: '#fff' } : { color: '#000' };
+  const { catFact, setCatFact } = useCatFact();
 
   const handleGetCatFact = async () => {
     const data = await getRandomCatFact();
