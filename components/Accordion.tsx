@@ -22,12 +22,6 @@ const Accordion = ({
   const { dark } = useTheme();
 
   const toggleAccordion = () => {
-    // Animated.timing(animation, {
-    //   toValue: expanded ? 0 : 1,
-    //   duration: 300,
-    //   useNativeDriver: false, // Important for height animations
-    // }).start();
-
     setExpanded(!expanded);
   };
 
@@ -37,8 +31,8 @@ const Accordion = ({
   });
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.header} onPress={toggleAccordion}>
+    <View className="border border-gray-300 rounded-lg m-2 z-500 overflow-hidden">
+      <TouchableOpacity className="flex-row justify-between items-center p-2" onPress={toggleAccordion}>
         <ThemedText style={styles.headerText}>{title}</ThemedText>
         <Icon
           name={expanded ? 'expand-less' : 'expand-more'}
