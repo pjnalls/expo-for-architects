@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import MapView from 'react-native-maps';
 
 export default function TabTwoScreen() {

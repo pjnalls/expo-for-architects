@@ -1,10 +1,12 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { CatFact } from '@/types/CatFact';
 import { getCatFacts } from '@/api/CatFact';
 import { useTheme } from '@react-navigation/native';
+import { useCatFact } from '@/contexts/CatFactContext';
+import { router } from 'expo-router';
 
 export default function CatFactsScreen() {
   const { dark } = useTheme();
@@ -18,6 +20,13 @@ export default function CatFactsScreen() {
     setPage(page + 1);
     setDisplayItems((items) => (items ? items.concat(data ?? []) : data ?? []));
     setIsLoading(false);
+  };
+
+  const { setCatFact } = useCatFact();
+
+  const handleCatFactPress = (fact: CatFact) => {
+    setCatFact(fact);
+    router.push('/catfact');
   };
 
   React.useEffect(() => {
@@ -38,11 +47,15 @@ export default function CatFactsScreen() {
 
   const renderItem = ({ item }: { item: CatFact }) => {
     return (
-      <ThemedView className="h-36 m-2 p-2 bg-gray-200 rounded-md">
-        <ThemedText>
-          {item.fact.length > 140 ? item.fact.slice(0, 140) + '...' : item.fact}
-        </ThemedText>
-      </ThemedView>
+      <TouchableOpacity className="h-36 m-2 " onPress={() => handleCatFactPress(item)}>
+        <ThemedView className="h-full w-full p-4 rounded-md">
+          <ThemedText>
+            {item.fact.length > 140
+              ? item.fact.slice(0, 140) + '...'
+              : item.fact}
+          </ThemedText>
+        </ThemedView>
+      </TouchableOpacity>
     );
   };
 
@@ -53,7 +66,10 @@ export default function CatFactsScreen() {
   };
 
   return (
-    <ThemedView className="flex-1" style={dark ? { backgroundColor: '#111' } : { backgroundColor: '#eee' }}>
+    <ThemedView
+      className="flex-1"
+      style={dark ? { backgroundColor: '#000' } : { backgroundColor: '#ddd' }}
+    >
       <ThemedView className="h-24 p-12">
         <ThemedText className="text-2xl font-bold">Cat Facts</ThemedText>
       </ThemedView>
