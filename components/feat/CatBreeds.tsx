@@ -43,6 +43,7 @@ function SearchBar({ handleSearch }: { handleSearch: (text: string) => void }) {
         value={searchText}
         onChangeText={(value) => handleSearchText(value)}
         placeholderTextColor={`${dark ? '#667' : '#778'}`}
+        maxLength={256}
       />
       <View
         className={`${

@@ -1,11 +1,17 @@
 import { TouchableOpacity } from 'react-native';
-import Accordion from '../Accordion';
-import { ThemedText } from '../ThemedText';
-import { ThemedView } from '../ThemedView';
+import { useTheme } from '@react-navigation/native';
+
+import Accordion from '@/components/Accordion';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 
 export default function CatAppHeader() {
+  const { dark } = useTheme();
   return (
-    <ThemedView className="h-24 fixed top-10 z-40">
+    <ThemedView
+      className="fixed pt-12 z-40"
+      style={{ backgroundColor: dark ? '#000' : '#fff' }}
+    >
       <TouchableOpacity>
         <ThemedView className="p-2">
           <Accordion title="User">
