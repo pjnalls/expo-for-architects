@@ -14,6 +14,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import CatFactView from '@/components/feat/CatFactView';
 import { useCatFact } from '@/contexts/CatFactContext';
+import ThemedButton from '@/components/ThemedButton';
 
 export default function HomeScreen() {
   const { dark } = useTheme();
@@ -73,13 +74,7 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <CatFactView />
-      <TouchableOpacity
-        onPress={handleExploreCatFacts}
-        className="bg-blue-500 rounded-md p-2 items-center justify-center"
-        style={{ backgroundColor: dark ? '#014a7b' : '#61dafb' }}
-      >
-        <Text style={themeStyle}>Explore Cat Facts</Text>
-      </TouchableOpacity>
+      <ThemedButton text="Explore Cat Facts" onPress={handleExploreCatFacts} />
     </ParallaxScrollView>
   );
 }

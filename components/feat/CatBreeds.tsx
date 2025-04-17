@@ -1,10 +1,17 @@
 import { useTheme } from '@react-navigation/native';
 import { useState } from 'react';
 
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import ThemedButton from '@/components/ThemedButton';
 
 const CAT_BREEDS: CatBreed[] = [
   { id: '1', name: 'Persian', checked: false },
@@ -23,7 +30,13 @@ type CatBreed = {
   checked: boolean;
 };
 
-function SearchBar({ handleSearch }: { handleSearch: (text: string) => void }) {
+function SearchBar({
+  handleSearch,
+  className,
+}: {
+  handleSearch: (text: string) => void;
+  className?: string;
+}) {
   const { dark } = useTheme();
   const [searchText, setSearchText] = useState('');
 
@@ -33,11 +46,11 @@ function SearchBar({ handleSearch }: { handleSearch: (text: string) => void }) {
   };
 
   return (
-    <View className="w-full flex-row items-center">
+    <View className={`flex-row items-center ${className}`}>
       <TextInput
         className={`${
           dark ? 'bg-[#ccc]' : 'bg-[#ddd]'
-        } p-2 py-1 w-[90%] h-[32px] text-black text-lg`}
+        } p-2 py-1 w-[87%] h-[32px] text-black text-lg`}
         placeholder="Search for a breed"
         style={{ borderBottomLeftRadius: 6, borderTopLeftRadius: 6 }}
         value={searchText}
@@ -48,7 +61,7 @@ function SearchBar({ handleSearch }: { handleSearch: (text: string) => void }) {
       <View
         className={`${
           dark ? 'bg-[#ccc]' : 'bg-[#ddd]'
-        } p-2 py-1 h-[32px] w-[10%]`}
+        } p-2 py-1 h-[32px] w-[13%]`}
         style={[
           {
             borderBottomRightRadius: 6,
@@ -92,6 +105,7 @@ export default function CatBreeds() {
   const [catBreeds, setCatBreeds] = useState<CatBreed[] | undefined>(
     CAT_BREEDS
   );
+  const { dark } = useTheme();
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -111,20 +125,39 @@ export default function CatBreeds() {
     setCatBreeds(catBreeds?.map(checkBreed));
   };
 
+  const handleClear = () => {
+    setSearchText('');
+    setFilteredCatBreeds(CAT_BREEDS);
+    setCatBreeds(CAT_BREEDS);
+  };
+
   return (
-    <ThemedView className="flex-row flex-wrap gap-2">
-      <SearchBar handleSearch={handleSearch} />
-      {filteredCatBreeds?.map(({ name, checked, id }) => (
-        <TouchableOpacity
-          className="w-full"
-          key={`CatBreedItem-${name}-${id}`}
-          onPress={() => {
-            handleCatBreedChecked(id);
-          }}
-        >
-          <CatBreedItem name={name} checked={checked} />
-        </TouchableOpacity>
-      ))}
+    <ThemedView className="flex-row flex-wrap gap-6 w-full">
+      <View className="flex-row gap-2 items-center w-full">
+        <SearchBar handleSearch={handleSearch} className="w-4/5" />
+        <ThemedButton
+          text="Clear"
+          onPress={handleClear}
+          className="w-1/5 text-lg h-[32px]"
+        />
+      </View>
+      <View
+        className={`w-full h-[240px] border-[1px] ${
+          dark ? 'border-[#eee]' : 'border-[#111]'
+        } rounded-md`}
+      >
+        <ScrollView>
+          {filteredCatBreeds?.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              className="p-2 pt-2 pb-0"
+              onPress={() => handleCatBreedChecked(item.id)}
+            >
+              <CatBreedItem name={item.name} checked={item.checked} />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     </ThemedView>
   );
 }
