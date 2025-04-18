@@ -136,7 +136,7 @@ export default function CatBreeds() {
       <View className="flex-row gap-2 items-center w-full">
         <SearchBar handleSearch={handleSearch} className="w-4/5" />
         <ThemedButton
-          text="Clear"
+          title="Clear"
           onPress={handleClear}
           className="w-1/5 text-lg h-[32px]"
         />

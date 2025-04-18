@@ -74,7 +74,7 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <CatFactView />
-      <ThemedButton text="Explore Cat Facts" onPress={handleExploreCatFacts} />
+      <ThemedButton title="Explore Cat Facts" onPress={handleExploreCatFacts} />
     </ParallaxScrollView>
   );
 }

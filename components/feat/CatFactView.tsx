@@ -25,7 +25,7 @@ export default function CatFactView() {
       <Text className="text-xl font-bold" style={themeStyle}>
         A Random Cat Fact
       </Text>
-      <ThemedButton text="Get Cat Fact" onPress={handleGetCatFact} />
+      <ThemedButton title="Get Cat Fact" onPress={handleGetCatFact} />
       <Text style={themeStyle}>
         {catFact ? catFact.fact : 'Get a cat fact'}
       </Text>

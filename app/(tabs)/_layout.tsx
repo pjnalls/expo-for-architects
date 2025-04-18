@@ -8,6 +8,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ThemedView } from '@/components/ThemedView';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -42,11 +43,23 @@ export default function TabLayout() {
         options={{
           title: 'Explore',
           tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="manage-search"
-              size={24}
-              color={color}
-            />
+            <MaterialIcons name="manage-search" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="register"
+        options={{
+          title: '',
+          tabBarIcon: ({ color }) => (
+            <ThemedView
+              className={`h-[36px] w-[36px] top-4 rounded-full items-center justify-center`}
+              style={{
+                backgroundColor: colorScheme === 'dark' ? '#000' : '#ddd',
+              }}
+            >
+              <MaterialIcons name="add" size={36} color={color} />
+            </ThemedView>
           ),
         }}
       />

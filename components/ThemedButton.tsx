@@ -7,12 +7,12 @@ import { useTheme } from '@react-navigation/native';
 
 type ThemedButtonProps = TouchableOpacityProps & {
   onPress: () => void;
-  text: string;
+  title: string;
   className?: string;
 };
 
 export default function ThemedButton({
-  text,
+  title,
   onPress,
   className,
 }: ThemedButtonProps) {
@@ -25,7 +25,7 @@ export default function ThemedButton({
       className={`bg-blue-500 rounded-md p-2 items-center justify-center ${className}`}
       style={{ backgroundColor: dark ? '#014a7b' : '#61dafb' }}
     >
-      <Text style={themeStyle}>{text}</Text>
+      <Text style={themeStyle}>{title}</Text>
     </TouchableOpacity>
   );
 }
