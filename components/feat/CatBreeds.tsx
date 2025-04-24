@@ -52,7 +52,7 @@ function SearchBar({
           dark ? 'bg-[#ccc]' : 'bg-[#ddd]'
         } p-2 py-1 w-[87%] h-[32px] text-black text-lg`}
         placeholder="Search for a breed"
-        style={{ borderBottomLeftRadius: 6, borderTopLeftRadius: 6 }}
+        style={{ borderBottomLeftRadius: 4, borderTopLeftRadius: 4 }}
         value={searchText}
         onChangeText={(value) => handleSearchText(value)}
         placeholderTextColor={`${dark ? '#667' : '#778'}`}
@@ -64,8 +64,8 @@ function SearchBar({
         } p-2 py-1 h-[32px] w-[13%]`}
         style={[
           {
-            borderBottomRightRadius: 6,
-            borderTopRightRadius: 6,
+            borderBottomRightRadius: 4,
+            borderTopRightRadius: 4,
           },
         ]}
       >
@@ -98,7 +98,7 @@ function CatBreedItem({ name, checked }: CatBreed) {
 }
 
 export default function CatBreeds() {
-  const [, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState('');
   const [filteredCatBreeds, setFilteredCatBreeds] = useState<
     CatBreed[] | undefined
   >(CAT_BREEDS);
@@ -132,32 +132,36 @@ export default function CatBreeds() {
   };
 
   return (
-    <ThemedView className="flex-row flex-wrap gap-6 w-full">
-      <View className="flex-row gap-2 items-center w-full">
-        <SearchBar handleSearch={handleSearch} className="w-4/5" />
+    <ThemedView className="flex-row flex-wrap gap-4 w-full mb-4">
+      <View className="flex-row gap-4 items-center w-full">
+        <SearchBar handleSearch={handleSearch} className="w-[76%]" />
         <ThemedButton
           title="Clear"
           onPress={handleClear}
           className="w-1/5 text-lg h-[32px]"
         />
       </View>
-      <View
-        className={`w-full h-[240px] border-[1px] ${
-          dark ? 'border-[#eee]' : 'border-[#111]'
-        } rounded-md`}
-      >
-        <ScrollView>
-          {filteredCatBreeds?.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              className="p-2 pt-2 pb-0"
-              onPress={() => handleCatBreedChecked(item.id)}
-            >
-              <CatBreedItem name={item.name} checked={item.checked} />
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
+      {/([a-zA-Z ])+/.test(searchText) &&
+        filteredCatBreeds &&
+        filteredCatBreeds?.length > 0 && (
+          <View
+            className={`w-full max-h-[200px] border-[1px] ${
+              dark ? 'border-[#eee]' : 'border-[#111]'
+            } rounded-md`}
+          >
+            <ScrollView>
+              {filteredCatBreeds?.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  className="p-2 pt-2 pb-0"
+                  onPress={() => handleCatBreedChecked(item.id)}
+                >
+                  <CatBreedItem name={item.name} checked={item.checked} />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
     </ThemedView>
   );
 }

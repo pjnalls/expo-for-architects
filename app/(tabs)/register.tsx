@@ -1,12 +1,13 @@
-import { TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import { useEffect, useState } from 'react';
 // import { useLocalSearchParams } from 'expo-router';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useCatFact } from '@/contexts/CatFactContext';
 import { useTheme } from '@react-navigation/native';
 import ThemedButton from '@/components/ThemedButton';
+import ThemedTextInput from '@/components/ThemedTextInput';
+import CatBreeds from '@/components/feat/CatBreeds';
 
 type RegisterationStep =
   | 'enter_info'
@@ -20,9 +21,15 @@ type RegisterationStepNode = {
   enabled: boolean;
 };
 
+type InputField = {
+  label: 'Last Name' | 'First Name' | 'Email' | 'Phone Number' | 'Password';
+  value: string;
+  onChangeText: (text: string) => void;
+  setInputFields?: React.Dispatch<React.SetStateAction<InputField[]>>;
+};
+
 export default function RegisterationScreen() {
   // const item = useLocalSearchParams();
-  const { catFact } = useCatFact();
   const { dark } = useTheme();
   const [registerationStep, setRegisterationStep] =
     useState<RegisterationStep>('enter_info');
@@ -34,12 +41,71 @@ export default function RegisterationScreen() {
     { step: 'success', enabled: false },
   ]);
 
+  const handleFirstNameChange = (text: string) => {
+    setInputFields((fields) =>
+      fields.map((field) => ({
+        ...field,
+        value: field.label === 'First Name' ? text : field.value,
+      }))
+    );
+  };
+
+  const handleLastNameChange = (text: string) => {
+    setInputFields((fields) =>
+      fields.map((field) => ({
+        ...field,
+        value: field.label === 'Last Name' ? text : field.value,
+      }))
+    );
+  };
+
+  const handleEmailChange = (text: string) => {
+    setInputFields((fields) =>
+      fields.map((field) => ({
+        ...field,
+        value: field.label === 'Email' ? text : field.value,
+      }))
+    );
+  };
+
+  const [inputFields, setInputFields] = useState<InputField[]>([
+    { label: 'First Name', value: '', onChangeText: handleFirstNameChange },
+    { label: 'Last Name', value: '', onChangeText: handleLastNameChange },
+    { label: 'Email', value: '', onChangeText: handleEmailChange },
+  ]);
+
+  useEffect(() => {
+    setInputFields((fields) =>
+      fields.map((field) => ({
+        ...field,
+        setInputFields,
+      }))
+    );
+  }, []);
+
   const addCat = () => {
     switch (registerationStep) {
       case 'enter_info':
         return (
           <View className="flex flex-col items-center justify-center gap-2 w-full">
-            <ThemedText type="subtitle">Enter Info</ThemedText>
+            <ThemedText type="subtitle" className="text-center">
+              Enter Info
+            </ThemedText>
+            <ScrollView
+              className={`w-full h-[240px] my-4 border-[1px] ${
+                dark ? 'border-gray-300' : 'border-gray-700'
+              } rounded-lg p-4`}
+            >
+              <View className="w-full">
+                {inputFields.map((input, index) => (
+                  <ThemedTextInput
+                    key={`Enter-${input.label}-${index}`}
+                    {...input}
+                  />
+                ))}
+                <CatBreeds />
+              </View>
+            </ScrollView>
             <View className="flex flex-row justify-end w-full">
               <ThemedButton
                 className="w-1/4"
@@ -53,6 +119,23 @@ export default function RegisterationScreen() {
         return (
           <View className="flex flex-col items-center justify-center gap-2 w-full">
             <ThemedText type="subtitle">Review and Confirm</ThemedText>
+            <ScrollView
+              className={`w-full h-[240px] my-4 border-[1px] ${
+                dark ? 'border-gray-300' : 'border-gray-700'
+              } rounded-lg p-4`}
+            >
+              <View className="w-full">
+                {inputFields.map((input, index) => (
+                  <View
+                    key={`Review-${input.label}-${index}`}
+                    className="flex flex-row justify-between"
+                  >
+                    <ThemedText type="default">{input.label}</ThemedText>
+                    <ThemedText type="default">{input.value}</ThemedText>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
             <View className="flex flex-row justify-between w-full">
               <ThemedButton
                 className="w-1/4"
@@ -71,10 +154,23 @@ export default function RegisterationScreen() {
         return (
           <View className="flex flex-col items-center justify-center gap-2 w-full">
             <ThemedText type="subtitle">Success</ThemedText>
+            <View className={`w-full h-[240px] my-4 p-4`}>
+              <ThemedText type="default" className="text-center">
+                A new cat has been added successfully!
+              </ThemedText>
+            </View>
             <View className="flex flex-row justify-center w-full">
               <ThemedButton
                 title="Add Another Cat"
-                onPress={() => handleRegisterationStep('enter_info')}
+                onPress={() => {
+                  setInputFields((fields) =>
+                    fields.map((field) => ({
+                      ...field,
+                      value: '',
+                    }))
+                  );
+                  handleRegisterationStep('enter_info');
+                }}
               />
             </View>
           </View>
@@ -150,7 +246,7 @@ export default function RegisterationScreen() {
       <View
         className={`w-[90%] ${
           dark ? 'bg-green-200' : 'bg-green-800'
-        } h-4 z-10 relative bottom-[12px]`}
+        } h-4 z-10 relative bottom-[12px] mb-4`}
       ></View>
       {addCat()}
     </ThemedView>

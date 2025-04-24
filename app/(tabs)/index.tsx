@@ -1,10 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import { Image, StyleSheet, Platform } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { router } from 'expo-router';
 
@@ -18,7 +12,6 @@ import ThemedButton from '@/components/ThemedButton';
 
 export default function HomeScreen() {
   const { dark } = useTheme();
-  const themeStyle = dark ? { color: '#fff' } : { color: '#000' };
   const { catFact } = useCatFact();
 
   const handleExploreCatFacts = () => {
