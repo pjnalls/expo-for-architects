@@ -8,6 +8,7 @@ import { useTheme } from '@react-navigation/native';
 import ThemedButton from '@/components/ThemedButton';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import CatBreeds from '@/components/feat/CatBreeds';
+import DataPicker from '@/components/DataPicker';
 
 type RegisterationStep =
   | 'enter_info'
@@ -92,7 +93,7 @@ export default function RegisterationScreen() {
               Enter Info
             </ThemedText>
             <ScrollView
-              className={`w-full h-[240px] my-4 border-[1px] ${
+              className={`w-full h-1/2 my-4 border-[1px] ${
                 dark ? 'border-gray-300' : 'border-gray-700'
               } rounded-lg p-4`}
             >
@@ -104,6 +105,7 @@ export default function RegisterationScreen() {
                   />
                 ))}
                 <CatBreeds />
+                <DataPicker />
               </View>
             </ScrollView>
             <View className="flex flex-row justify-end w-full">
@@ -120,7 +122,7 @@ export default function RegisterationScreen() {
           <View className="flex flex-col items-center justify-center gap-2 w-full">
             <ThemedText type="subtitle">Review and Confirm</ThemedText>
             <ScrollView
-              className={`w-full h-[240px] my-4 border-[1px] ${
+              className={`w-full h-1/2 my-4 border-[1px] ${
                 dark ? 'border-gray-300' : 'border-gray-700'
               } rounded-lg p-4`}
             >
@@ -153,8 +155,12 @@ export default function RegisterationScreen() {
       case 'success':
         return (
           <View className="flex flex-col items-center justify-center gap-2 w-full">
-            <ThemedText type="subtitle">Success</ThemedText>
-            <View className={`w-full h-[240px] my-4 p-4`}>
+            <ThemedText type="subtitle" className="text-center">
+              Success
+            </ThemedText>
+            <View
+              className={`w-full h-1/2 my-4 p-4 border-[1px] border-transparent`}
+            >
               <ThemedText type="default" className="text-center">
                 A new cat has been added successfully!
               </ThemedText>

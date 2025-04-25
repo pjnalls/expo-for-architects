@@ -48,9 +48,9 @@ function SearchBar({
   return (
     <View className={`flex-row items-center ${className}`}>
       <TextInput
-        className={`${
-          dark ? 'bg-[#ccc]' : 'bg-[#ddd]'
-        } p-2 py-1 w-[87%] h-[32px] text-black text-lg`}
+        className={`${className} border-2 ${
+          dark ? 'border-gray-300 text-gray-300' : 'border-gray-700 text-gray-700'
+        } rounded-md p-2 mb-4 px-3 h-10 w-full`}
         placeholder="Search for a breed"
         style={{ borderBottomLeftRadius: 4, borderTopLeftRadius: 4 }}
         value={searchText}
@@ -58,19 +58,6 @@ function SearchBar({
         placeholderTextColor={`${dark ? '#667' : '#778'}`}
         maxLength={256}
       />
-      <View
-        className={`${
-          dark ? 'bg-[#ccc]' : 'bg-[#ddd]'
-        } p-2 py-1 h-[32px] w-[13%]`}
-        style={[
-          {
-            borderBottomRightRadius: 4,
-            borderTopRightRadius: 4,
-          },
-        ]}
-      >
-        <IconSymbol name="magnifyingglass" color="#888" size={25} />
-      </View>
     </View>
   );
 }
@@ -132,13 +119,16 @@ export default function CatBreeds() {
   };
 
   return (
-    <ThemedView className="flex-row flex-wrap gap-4 w-full mb-4">
-      <View className="flex-row gap-4 items-center w-full">
-        <SearchBar handleSearch={handleSearch} className="w-[76%]" />
+    <ThemedView className="w-full flex flex-col gap-2">
+      <ThemedText type="default" className="w-full">
+        Cat Breeds
+      </ThemedText>
+      <View className="flex flex-row justify-between gap-2 w-full">
+        <SearchBar handleSearch={handleSearch} className="w-[89%]" />
         <ThemedButton
           title="Clear"
           onPress={handleClear}
-          className="w-1/5 text-lg h-[32px]"
+          className="w-2/12 text-lg h-[36px] left-[-28px]"
         />
       </View>
       {/([a-zA-Z ])+/.test(searchText) &&
