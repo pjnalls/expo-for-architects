@@ -77,10 +77,10 @@ function CatBreedItem({ name, checked }: CatBreed) {
       </Text>
     </View>
   ) : (
-    <ThemedView className="rounded-md p-2 flex-row items-center gap-2">
+    <View className={`rounded-md p-2 flex-row items-center gap-2 ${dark ? 'bg-zinc-700' : 'bg-zinc-200'}`}>
       <IconSymbol name="square" color={`${dark ? '#ECEDEE' : '#11181C'}`} />
       <ThemedText>{name}</ThemedText>
-    </ThemedView>
+    </View>
   );
 }
 
@@ -119,16 +119,16 @@ export default function CatBreeds() {
   };
 
   return (
-    <ThemedView className="w-full flex flex-col gap-2">
-      <ThemedText type="default" className="w-full">
+    <View className="w-full flex flex-col gap-2">
+      <ThemedText type="default" className="w-full" >
         Cat Breeds
       </ThemedText>
       <View className="flex flex-row justify-between gap-2 w-full">
-        <SearchBar handleSearch={handleSearch} className="w-[89%]" />
+        <SearchBar handleSearch={handleSearch} className="w-[87%]" />
         <ThemedButton
           title="Clear"
           onPress={handleClear}
-          className="w-2/12 text-lg h-[36px] left-[-28px]"
+          className="w-[17%] text-lg h-[36px] left-[-28px]"
         />
       </View>
       {/([a-zA-Z ])+/.test(searchText) &&
@@ -136,8 +136,8 @@ export default function CatBreeds() {
         filteredCatBreeds?.length > 0 && (
           <View
             className={`w-full max-h-[200px] border-[1px] ${
-              dark ? 'border-[#eee]' : 'border-[#111]'
-            } rounded-md`}
+              dark ? 'border-grey-800' : 'border-[#111]'
+            } rounded-md pb-2`}
           >
             <ScrollView>
               {filteredCatBreeds?.map((item, index) => (
@@ -152,6 +152,6 @@ export default function CatBreeds() {
             </ScrollView>
           </View>
         )}
-    </ThemedView>
+    </View>
   );
 }

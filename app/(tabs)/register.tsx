@@ -25,6 +25,9 @@ type RegisterationStepNode = {
 type InputField = {
   label: 'Last Name' | 'First Name' | 'Email' | 'Phone Number' | 'Password';
   value: string;
+  errorMessage: string;
+  isValid: boolean;
+  rule: RegExp;
   onChangeText: (text: string) => void;
   setInputFields?: React.Dispatch<React.SetStateAction<InputField[]>>;
 };
@@ -41,38 +44,78 @@ export default function RegisterationScreen() {
     { step: 'review_and_confirm', enabled: false },
     { step: 'success', enabled: false },
   ]);
+  const [hasError, setHasError] = useState(true);
+
+  const handleButtonDisabled = (fields: InputField[]) => {
+    fields.filter((field) => field.isValid).length >= fields.length
+      ? setHasError(false)
+      : setHasError(true);
+  };
 
   const handleFirstNameChange = (text: string) => {
-    setInputFields((fields) =>
-      fields.map((field) => ({
+    setInputFields((fields) => {
+      const f = fields.map((field) => ({
         ...field,
         value: field.label === 'First Name' ? text : field.value,
-      }))
-    );
+        isValid:
+          field.label === 'First Name' ? field.rule.test(text) : field.isValid,
+      }));
+      handleButtonDisabled(f);
+      return f;
+    });
   };
 
   const handleLastNameChange = (text: string) => {
-    setInputFields((fields) =>
-      fields.map((field) => ({
+    setInputFields((fields) => {
+      const f = fields.map((field) => ({
         ...field,
         value: field.label === 'Last Name' ? text : field.value,
-      }))
-    );
+        isValid:
+          field.label === 'Last Name' ? field.rule.test(text) : field.isValid,
+      }));
+      handleButtonDisabled(f);
+      return f;
+    });
   };
 
   const handleEmailChange = (text: string) => {
-    setInputFields((fields) =>
-      fields.map((field) => ({
+    setInputFields((fields) => {
+      const f = fields.map((field) => ({
         ...field,
         value: field.label === 'Email' ? text : field.value,
-      }))
-    );
+        isValid:
+          field.label === 'Email' ? field.rule.test(text) : field.isValid,
+      }));
+      handleButtonDisabled(f);
+      return f;
+    });
   };
 
   const [inputFields, setInputFields] = useState<InputField[]>([
-    { label: 'First Name', value: '', onChangeText: handleFirstNameChange },
-    { label: 'Last Name', value: '', onChangeText: handleLastNameChange },
-    { label: 'Email', value: '', onChangeText: handleEmailChange },
+    {
+      label: 'First Name',
+      value: '',
+      errorMessage: 'Invalid first name',
+      isValid: false,
+      rule: /^[a-zA-Z]{1}[a-zA-Z ]*$/,
+      onChangeText: handleFirstNameChange,
+    },
+    {
+      label: 'Last Name',
+      value: '',
+      errorMessage: 'Invalid last name',
+      isValid: false,
+      rule: /^[a-zA-Z]{1}[a-zA-Z ]*$/,
+      onChangeText: handleLastNameChange,
+    },
+    {
+      label: 'Email',
+      value: '',
+      errorMessage: 'Invalid email',
+      isValid: false,
+      rule: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      onChangeText: handleEmailChange,
+    },
   ]);
 
   useEffect(() => {
@@ -94,7 +137,9 @@ export default function RegisterationScreen() {
             </ThemedText>
             <ScrollView
               className={`w-full h-1/2 my-4 border-[1px] ${
-                dark ? 'border-gray-300' : 'border-gray-700'
+                dark
+                  ? 'bg-zinc-800 border-gray-600'
+                  : 'bg-zinc-100 border-gray-400'
               } rounded-lg p-4`}
             >
               <View className="w-full">
@@ -112,6 +157,7 @@ export default function RegisterationScreen() {
               <ThemedButton
                 className="w-1/4"
                 title="Next"
+                disabled={hasError}
                 onPress={() => handleRegisterationStep('review_and_confirm')}
               />
             </View>
@@ -123,7 +169,9 @@ export default function RegisterationScreen() {
             <ThemedText type="subtitle">Review and Confirm</ThemedText>
             <ScrollView
               className={`w-full h-1/2 my-4 border-[1px] ${
-                dark ? 'border-gray-300' : 'border-gray-700'
+                dark
+                  ? 'bg-zinc-800 border-gray-600'
+                  : 'bg-zing-200 border-gray-600'
               } rounded-lg p-4`}
             >
               <View className="w-full">
