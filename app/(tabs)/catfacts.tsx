@@ -3,7 +3,7 @@ import { ThemedView } from '@/components/ThemedView';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { CatFact } from '@/types/CatFact';
-import { getCatFacts } from '@/api/endpoints/CatFact';
+import { getCatFacts } from '@/api/fetches/vendors/CatFact';
 import { useTheme } from '@react-navigation/native';
 import { useCatFact } from '@/contexts/CatFactContext';
 import { router } from 'expo-router';

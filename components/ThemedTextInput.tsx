@@ -28,7 +28,7 @@ export default function ThemedTextInput({
         ? `${prop}-red-700`
         : dark
         ? `${prop}-gray-300`
-        : `${prop}-gray-700}`
+        : `${prop}-gray-700`
     }`;
 
   return (

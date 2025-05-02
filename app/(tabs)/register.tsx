@@ -10,7 +10,7 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import CatBreeds from '@/components/feat/CatBreeds';
 import DataPicker from '@/components/DataPicker';
 
-import { addCat } from '@/api/endpoints/Cat';
+import { addCat, getCats } from '@/api/fetches/Cat';
 
 type RegisterationStep =
   | 'enter_info'
@@ -198,11 +198,12 @@ export default function RegisterationScreen() {
                 className="w-1/4"
                 title="Confirm"
                 onPress={async () => {
-                  await addCat({
+                  console.log(await addCat({
                     firstName: 'John',
                     lastName: 'Doe',
                     email: 'jd@gmail.com',
-                  });
+                  }));
+                  console.log(await getCats());
                   handleRegisterationStep('success');
                 }}
               />

@@ -3,9 +3,7 @@ import { Cat } from '@/types/Cat';
 const CatAPIEndpoint = 'http://localhost:3000/api/cat';
 
 export async function getCats(): Promise<Cat[] | undefined> {
-  const json: { data: Cat[] } | undefined = await fetch(
-    `${CatAPIEndpoint}/get-cats`
-  )
+  const json: Cat[] | undefined = await fetch(`${CatAPIEndpoint}/get-cats`)
     .then((res) => {
       if (!res.ok) {
         return undefined;
@@ -13,23 +11,24 @@ export async function getCats(): Promise<Cat[] | undefined> {
       return res.json();
     })
     .catch(() => undefined);
-  return json?.data;
+  return json;
 }
 
 export async function addCat(cat: Cat): Promise<Cat | undefined> {
-  const json: { data: Cat } | undefined = await fetch(
-    `${CatAPIEndpoint}/add-cat`,
-    {
-      method: 'POST',
-      body: JSON.stringify(cat),
-    }
-  )
+  const json: Cat | undefined = await fetch(`${CatAPIEndpoint}/add-cat`, {
+    method: 'POST',
+    body: JSON.stringify(cat),
+  })
     .then((res) => {
+      console.log(!res.ok);
       if (!res.ok) {
         return undefined;
       }
       return res.json();
     })
-    .catch(() => undefined);
-  return json?.data;
+    .catch((e) => {
+      console.log('Error has occurred when adding cat', e);
+      return undefined;
+    });
+  return json;
 }
