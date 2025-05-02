@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { useEffect } from 'react';
 import { useTheme } from '@react-navigation/native';
 
-import { getRandomCatFact } from '@/api/CatFact';
+import { getRandomCatFact } from '@/api/endpoints/CatFact';
 import { useCatFact } from '@/contexts/CatFactContext';
 import ThemedButton from '@/components/ThemedButton';
 

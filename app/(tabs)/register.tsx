@@ -10,6 +10,8 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import CatBreeds from '@/components/feat/CatBreeds';
 import DataPicker from '@/components/DataPicker';
 
+import { addCat } from '@/api/endpoints/Cat';
+
 type RegisterationStep =
   | 'enter_info'
   | 'review_and_confirm'
@@ -127,7 +129,7 @@ export default function RegisterationScreen() {
     );
   }, []);
 
-  const addCat = () => {
+  const renderRegisterCat = () => {
     switch (registerationStep) {
       case 'enter_info':
         return (
@@ -195,7 +197,14 @@ export default function RegisterationScreen() {
               <ThemedButton
                 className="w-1/4"
                 title="Confirm"
-                onPress={() => handleRegisterationStep('success')}
+                onPress={async () => {
+                  await addCat({
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    email: 'jd@gmail.com',
+                  });
+                  handleRegisterationStep('success');
+                }}
               />
             </View>
           </View>
@@ -302,7 +311,7 @@ export default function RegisterationScreen() {
           dark ? 'bg-green-200' : 'bg-green-800'
         } h-4 z-10 relative bottom-[12px] mb-4`}
       ></View>
-      {addCat()}
+      {renderRegisterCat()}
     </ThemedView>
   );
 }

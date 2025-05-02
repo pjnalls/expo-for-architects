@@ -1,0 +1,31 @@
+{
+  "name": "react-native-preply-course-api",
+  "version": "0.0.1",
+  "description": "a small API subproject for the React Native Preply course project",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pjnalls/react-native-preply-course.git"
+  },
+  "keywords": [
+    "typescript",
+    "express",
+    "nodejs"
+  ],
+  "author": "Preston Nalls",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pjnalls/react-native-preply-course/issues"
+  },
+  "homepage": "https://github.com/pjnalls/react-native-preply-course#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.3",
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
