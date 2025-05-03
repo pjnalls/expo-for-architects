@@ -17,6 +17,9 @@ export async function getCats(): Promise<Cat[] | undefined> {
 export async function addCat(cat: Cat): Promise<Cat | undefined> {
   const json: Cat | undefined = await fetch(`${CatAPIEndpoint}/add-cat`, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(cat),
   })
     .then((res) => {

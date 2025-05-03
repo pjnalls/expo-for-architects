@@ -37,7 +37,15 @@ export default function ThemedTextInput({
       <TextInput
         className={`${className} border-2 ${
           dark ? 'text-gray-300' : 'text-gray-700'
-        } rounded-md p-2 mb-4 px-3 h-10 w-full ${getErrorColor('border')}`}
+        } rounded-md p-2 mb-4 px-3 h-10 w-full ${
+          dark && hasError
+            ? 'border-red-400'
+            : !dark && hasError
+            ? 'border-red-700'
+            : dark && !hasError
+            ? 'border-gray-300'
+            : 'border-gray-700'
+        }`}
         maxLength={256}
         onChangeText={onChangeText}
         autoCapitalize="none"

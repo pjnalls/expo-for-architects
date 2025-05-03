@@ -11,6 +11,7 @@ import CatBreeds from '@/components/feat/CatBreeds';
 import DataPicker from '@/components/DataPicker';
 
 import { addCat, getCats } from '@/api/fetches/Cat';
+import { Cat } from '@/types/Cat';
 
 type RegisterationStep =
   | 'enter_info'
@@ -198,12 +199,18 @@ export default function RegisterationScreen() {
                 className="w-1/4"
                 title="Confirm"
                 onPress={async () => {
-                  console.log(await addCat({
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    email: 'jd@gmail.com',
-                  }));
-                  console.log(await getCats());
+                  const data: Cat = {
+                    firstName:
+                      inputFields.find((field) => field.label === 'First Name')
+                        ?.value ?? '',
+                    lastName:
+                      inputFields.find((field) => field.label === 'Last Name')
+                        ?.value ?? '',
+                    email:
+                      inputFields.find((field) => field.label === 'Email')
+                        ?.value ?? '',
+                  };
+                  await addCat(data);
                   handleRegisterationStep('success');
                 }}
               />
