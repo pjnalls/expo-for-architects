@@ -23,7 +23,6 @@ export async function addCat(cat: Cat): Promise<Cat | undefined> {
     body: JSON.stringify(cat),
   })
     .then((res) => {
-      console.log(!res.ok);
       if (!res.ok) {
         return undefined;
       }

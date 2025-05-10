@@ -11,7 +11,7 @@ import CatBreeds from '@/components/feat/CatBreeds';
 import DataPicker from '@/components/DataPicker';
 
 import { addCat, getCats } from '@/api/fetches/Cat';
-import { Cat } from '@/types/Cat';
+import { Cat, CatBreed } from '@/types/Cat';
 
 type RegisterationStep =
   | 'enter_info'
@@ -35,6 +35,17 @@ type InputField = {
   setInputFields?: React.Dispatch<React.SetStateAction<InputField[]>>;
 };
 
+const CAT_BREEDS: CatBreed[] = [
+  { id: '1', name: 'Persian', checked: false },
+  { id: '2', name: 'Siamese', checked: false },
+  { id: '3', name: 'Maine Coon', checked: false },
+  { id: '4', name: 'Ragdoll', checked: false },
+  { id: '5', name: 'Sphynx', checked: false },
+  { id: '6', name: 'Abyssinian', checked: false },
+  { id: '7', name: 'American Shorthair', checked: false },
+  { id: '8', name: 'British Shorthair', checked: false },
+];
+
 export default function RegisterationScreen() {
   // const item = useLocalSearchParams();
   const { dark } = useTheme();
@@ -48,51 +59,6 @@ export default function RegisterationScreen() {
     { step: 'success', enabled: false },
   ]);
   const [hasError, setHasError] = useState(true);
-
-  const handleButtonDisabled = (fields: InputField[]) => {
-    fields.filter((field) => field.isValid).length >= fields.length
-      ? setHasError(false)
-      : setHasError(true);
-  };
-
-  const handleFirstNameChange = (text: string) => {
-    setInputFields((fields) => {
-      const f = fields.map((field) => ({
-        ...field,
-        value: field.label === 'First Name' ? text : field.value,
-        isValid:
-          field.label === 'First Name' ? field.rule.test(text) : field.isValid,
-      }));
-      handleButtonDisabled(f);
-      return f;
-    });
-  };
-
-  const handleLastNameChange = (text: string) => {
-    setInputFields((fields) => {
-      const f = fields.map((field) => ({
-        ...field,
-        value: field.label === 'Last Name' ? text : field.value,
-        isValid:
-          field.label === 'Last Name' ? field.rule.test(text) : field.isValid,
-      }));
-      handleButtonDisabled(f);
-      return f;
-    });
-  };
-
-  const handleEmailChange = (text: string) => {
-    setInputFields((fields) => {
-      const f = fields.map((field) => ({
-        ...field,
-        value: field.label === 'Email' ? text : field.value,
-        isValid:
-          field.label === 'Email' ? field.rule.test(text) : field.isValid,
-      }));
-      handleButtonDisabled(f);
-      return f;
-    });
-  };
 
   const [inputFields, setInputFields] = useState<InputField[]>([
     {
@@ -120,6 +86,58 @@ export default function RegisterationScreen() {
       onChangeText: handleEmailChange,
     },
   ]);
+  const [filteredCatBreeds, setFilteredCatBreeds] = useState<
+    CatBreed[] | undefined
+  >(CAT_BREEDS);
+  const [catBreeds, setCatBreeds] = useState<CatBreed[] | undefined>(
+    CAT_BREEDS
+  );
+  const [date, setDate] = useState(new Date());
+
+  function handleButtonDisabled(fields: InputField[]) {
+    fields.filter((field) => field.isValid).length >= fields.length
+      ? setHasError(false)
+      : setHasError(true);
+  }
+
+  function handleFirstNameChange(text: string) {
+    setInputFields((fields) => {
+      const f = fields.map((field) => ({
+        ...field,
+        value: field.label === 'First Name' ? text : field.value,
+        isValid:
+          field.label === 'First Name' ? field.rule.test(text) : field.isValid,
+      }));
+      handleButtonDisabled(f);
+      return f;
+    });
+  }
+
+  function handleLastNameChange(text: string) {
+    setInputFields((fields) => {
+      const f = fields.map((field) => ({
+        ...field,
+        value: field.label === 'Last Name' ? text : field.value,
+        isValid:
+          field.label === 'Last Name' ? field.rule.test(text) : field.isValid,
+      }));
+      handleButtonDisabled(f);
+      return f;
+    });
+  }
+
+  function handleEmailChange(text: string) {
+    setInputFields((fields) => {
+      const f = fields.map((field) => ({
+        ...field,
+        value: field.label === 'Email' ? text : field.value,
+        isValid:
+          field.label === 'Email' ? field.rule.test(text) : field.isValid,
+      }));
+      handleButtonDisabled(f);
+      return f;
+    });
+  }
 
   useEffect(() => {
     setInputFields((fields) =>
@@ -152,8 +170,13 @@ export default function RegisterationScreen() {
                     {...input}
                   />
                 ))}
-                <CatBreeds />
-                <DataPicker />
+                <CatBreeds
+                  filteredCatBreeds={filteredCatBreeds}
+                  setFilteredCatBreeds={setFilteredCatBreeds}
+                  catBreeds={catBreeds}
+                  setCatBreeds={setCatBreeds}
+                />
+                <DataPicker date={date} setDate={setDate} />
               </View>
             </ScrollView>
             <View className="flex flex-row justify-end w-full">
@@ -187,6 +210,25 @@ export default function RegisterationScreen() {
                     <ThemedText type="default">{input.value}</ThemedText>
                   </View>
                 ))}
+                <View className="flex flex-row justify-between">
+                  <ThemedText type="default">Birthdate</ThemedText>
+                  <ThemedText type="default">
+                    {date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    })}
+                  </ThemedText>
+                </View>
+                <View className="flex flex-row justify-between">
+                  <ThemedText type="default">Cat Breed</ThemedText>
+                  <ThemedText type="default">
+                    {catBreeds
+                      ?.filter((breed) => breed.checked)
+                      .map((breed) => breed.name)
+                      .join(', ')}
+                  </ThemedText>
+                </View>
               </View>
             </ScrollView>
             <View className="flex flex-row justify-between w-full">
@@ -209,8 +251,15 @@ export default function RegisterationScreen() {
                     email:
                       inputFields.find((field) => field.label === 'Email')
                         ?.value ?? '',
+                    birthDate: date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    }),
+                    catBreed: catBreeds ?? [],
                   };
                   await addCat(data);
+                  console.log(await getCats());
                   handleRegisterationStep('success');
                 }}
               />

@@ -9,26 +9,8 @@ import {
   ScrollView,
 } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import ThemedButton from '@/components/ThemedButton';
-
-const CAT_BREEDS: CatBreed[] = [
-  { id: '1', name: 'Persian', checked: false },
-  { id: '2', name: 'Siamese', checked: false },
-  { id: '3', name: 'Maine Coon', checked: false },
-  { id: '4', name: 'Ragdoll', checked: false },
-  { id: '5', name: 'Sphynx', checked: false },
-  { id: '6', name: 'Abyssinian', checked: false },
-  { id: '7', name: 'American Shorthair', checked: false },
-  { id: '8', name: 'British Shorthair', checked: false },
-];
-
-type CatBreed = {
-  id?: string;
-  name: string;
-  checked: boolean;
-};
+import { CatBreed } from '@/types/Cat';
 
 function SearchBar({
   handleSearch,
@@ -90,14 +72,18 @@ function CatBreedItem({ name, checked }: CatBreed) {
   );
 }
 
-export default function CatBreeds() {
+export default function CatBreeds({
+  filteredCatBreeds,
+  setFilteredCatBreeds,
+  catBreeds,
+  setCatBreeds,
+}: {
+  filteredCatBreeds: CatBreed[] | undefined;
+  setFilteredCatBreeds: (catBreeds: CatBreed[]) => void;
+  catBreeds: CatBreed[] | undefined;
+  setCatBreeds: (catBreeds: CatBreed[]) => void;
+}) {
   const [searchText, setSearchText] = useState('');
-  const [filteredCatBreeds, setFilteredCatBreeds] = useState<
-    CatBreed[] | undefined
-  >(CAT_BREEDS);
-  const [catBreeds, setCatBreeds] = useState<CatBreed[] | undefined>(
-    CAT_BREEDS
-  );
   const { dark } = useTheme();
 
   const handleSearch = (text: string) => {
@@ -105,7 +91,7 @@ export default function CatBreeds() {
     const f = catBreeds?.filter((breed) =>
       breed.name.toLowerCase().includes(text.toLowerCase())
     );
-    setFilteredCatBreeds(f);
+    setFilteredCatBreeds(f || []);
   };
 
   const handleCatBreedChecked = (id?: string) => {
@@ -114,15 +100,15 @@ export default function CatBreeds() {
 
     if (!id) return;
 
-    setFilteredCatBreeds(filteredCatBreeds?.map(checkBreed));
-    setCatBreeds(catBreeds?.map(checkBreed));
+    setFilteredCatBreeds(filteredCatBreeds?.map(checkBreed) || []);
+    setCatBreeds(catBreeds?.map(checkBreed) || []);
   };
 
-  const handleClear = () => {
-    setSearchText('');
-    setFilteredCatBreeds(CAT_BREEDS);
-    setCatBreeds(CAT_BREEDS);
-  };
+  // const handleClear = () => {
+  //   setSearchText('');
+  //   setFilteredCatBreeds(CAT_BREEDS);
+  //   setCatBreeds(CAT_BREEDS);
+  // };
 
   return (
     <View className="w-full flex flex-col gap-2">

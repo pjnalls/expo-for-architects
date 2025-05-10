@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { CatFact } from '@/types/CatFact';
+import { CatFact } from '@/types/Cat';
 
 type CatFactContextType = {
   catFact: CatFact | undefined;
