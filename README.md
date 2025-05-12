@@ -1,50 +1,130 @@
-# Welcome to your Expo app 👋
+<br/>
+<div align="center">
+   <img alt="atom with brain" src="assets/images/splash-icon.png" width="120px"/>
+</div>
+<br/>
+<h1 align="center">
+   React Native Preply Tutorial
+   <br/>
+   <br/>
+</h1>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This project is a React Native application built with Expo that includes features like cat facts, maps, and user registration. Below is a step-by-step guide to build the solution.
 
-## Get started
+## Prerequisites
 
-1. Install dependencies
+- Node.js (LTS version recommended)
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+- iOS Simulator (for Mac) or Android Emulator
 
-   ```bash
-   npm install
-   ```
+## Step-by-Step Build Guide
 
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Initial Setup
 
 ```bash
-npm run reset-project
+# Create a new Expo project
+npx create-expo-app@latest .
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Install Core Dependencies
 
-## Learn more
+```bash
+# Install React Native Maps
+npx expo install react-native-maps
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Follow [this guide](https://www.nativewind.dev/docs/getting-started/installation#installation-with-expo) for installing and configuring NativeWind for styling
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 3. Project Structure Setup
 
-## Join the community
+The project follows a component-based architecture with the following main features:
 
-Join our community of developers creating universal apps.
+- Cat Facts Feature
+- Registration Flow
+- Map Integration
+- API Integration
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 4. Feature Implementation Order
+
+1. **Cat Facts Feature**
+
+   - Implement basic cat facts component
+   - Add infinite scroll for flat list
+   - Create checkboxes for different breeds
+   - Add search bar component
+   - Make cat facts pressable and viewable
+
+2. **UI Components**
+
+   - Add accordion component
+   - Implement reusable button component
+   - Create date picker component
+   - Add progress bar for registration
+
+3. **Registration Flow**
+
+   - Create enter, review & success subscreens
+   - Add validation to main registration form
+   - Implement map for explore screen
+
+4. **API Integration**
+   - Set up Express project
+   - Implement API endpoints
+   - Handle JSON parameters
+   - Fix request body handling
+
+### 5. Running the Application
+
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npx expo start
+```
+
+## Project Structure
+
+```
+├── components/       # Reusable UI components
+├── app/              # Main application screens
+├── api/              # Backend API implementation
+├── context/          # React Context providers
+├── types/            # Types throughout solution
+└── assets/           # Static assets
+```
+
+## Key Features
+
+- Cat Facts browsing with infinite scroll
+- User registration with multi-step form
+- Interactive map integration
+- Dark/Light theme support
+- Responsive UI components
+- API integration with Express backend
+
+## Development Notes
+
+- The project uses NativeWind for styling
+- React Native Maps is used for map functionality
+- Express is used for the backend API
+- The application follows a component-based architecture
+- State management is handled through React Context
+
+## Troubleshooting
+
+If you encounter any issues:
+
+1. Ensure all dependencies are properly installed
+2. Clear the Metro bundler cache: `npx expo start -c`
+3. Check that your development environment is properly configured
+4. Verify that all required environment variables are set
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
