@@ -14,9 +14,6 @@ import { useTheme } from '@react-navigation/native';
 import ThemedButton from '@/components/ThemedButton';
 import Geocoder from 'react-native-geocoding';
 import { GOOGLE_MAPS_API_KEY } from '@/env';
-// Initialize Geocoding with your Google Maps API key
-// Note: In a real app, you should store this in an environment variable
-// You can get your own API key from here https://developers.google.com/maps/documentation/geocoding/overview/
 
 export default function ExploreScreen() {
   const { dark } = useTheme();
@@ -24,7 +21,7 @@ export default function ExploreScreen() {
   const [searchText, setSearchText] = useState('');
   const [showRideOptions, setShowRideOptions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [pickupLocation, setPickupLocation] = useState({
+  const [pickupLocation,] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
   });

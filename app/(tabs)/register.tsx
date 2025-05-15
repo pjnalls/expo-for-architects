@@ -10,7 +10,7 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import CatBreeds from '@/components/feat/CatBreeds';
 import DataPicker from '@/components/DataPicker';
 
-import { addCat, getCats } from '@/api/fetches/Cat';
+import { addCat, getCats } from '@/api/endpoints/Cat';
 import { Cat, CatBreed } from '@/types/Cat';
 
 type RegisterationStep =

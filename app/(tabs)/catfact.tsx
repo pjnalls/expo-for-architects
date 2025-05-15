@@ -1,5 +1,4 @@
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
-import { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 // import { useLocalSearchParams } from 'expo-router';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -7,7 +6,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useCatFact } from '@/contexts/CatFactContext';
-import CatBreeds from '@/components/feat/CatBreeds';
 
 
 
@@ -31,7 +29,6 @@ export default function CatFactScreen() {
         <ThemedText type="title">Cat Fact</ThemedText>
       </ThemedView>
       <ThemedText>{catFact?.fact}</ThemedText>
-      <CatBreeds />
     </ParallaxScrollView>
   );
 }

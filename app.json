@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-preply-course",
-    "slug": "react-native-preply-course",
+    "name": "react-native-preply-tutorial",
+    "slug": "react-native-preply-tutorial",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

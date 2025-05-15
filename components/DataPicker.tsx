@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import DatetimePicker from '@react-native-community/datetimepicker';
 import { SetStateAction, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { StyleSheet } from 'react-native';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { ThemedText } from './ThemedText';
 

@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Platform } from 'react-native';
-import { useTheme } from '@react-navigation/native';
 import { router } from 'expo-router';
 
 import { HelloWave } from '@/components/HelloWave';
@@ -11,7 +10,6 @@ import { useCatFact } from '@/contexts/CatFactContext';
 import ThemedButton from '@/components/ThemedButton';
 
 export default function HomeScreen() {
-  const { dark } = useTheme();
   const { catFact } = useCatFact();
 
   const handleExploreCatFacts = () => {
