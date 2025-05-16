@@ -12,7 +12,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useTheme } from '@react-navigation/native';
 import ThemedButton from '@/components/ThemedButton';
-import Geocoder from 'react-native-geocoding';
+// import Geocoder from 'react-native-geocoding';
 import { GOOGLE_MAPS_API_KEY } from '@/env';
 
 export default function ExploreScreen() {
@@ -40,7 +40,7 @@ export default function ExploreScreen() {
   };
 
   useEffect(() => {
-    Geocoder.init(GOOGLE_MAPS_API_KEY);
+    // Geocoder.init(GOOGLE_MAPS_API_KEY);
   }, []);
 
   const handleSearchTextChange = (text: string) => {
@@ -52,34 +52,34 @@ export default function ExploreScreen() {
 
     setIsLoading(true);
     try {
-      const response = await Geocoder.from(text)
-        .then((data) => data)
-        .catch(() => {
-          return null;
-        });
+      // const response = await Geocoder.from(text)
+      //   .then((data) => data)
+      //   .catch(() => {
+      //     return null;
+      //   });
 
-      if (!response) return;
-      const { results } = response;
+      // if (!response) return;
+      // const { results } = response;
 
-      if (results && results.length > 0) {
-        const { location } = results[0].geometry;
-        const newLocation = {
-          latitude: location.lat,
-          longitude: location.lng,
-        };
+      // if (results && results.length > 0) {
+      //   const { location } = results[0].geometry;
+      //   const newLocation = {
+      //     latitude: location.lat,
+      //     longitude: location.lng,
+      //   };
 
-        setDropoffLocation(newLocation);
+        // setDropoffLocation(newLocation);
 
-        // Animate map to the new location
-        mapRef.current?.animateToRegion({
-          ...newLocation,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        });
+        // // Animate map to the new location
+        // mapRef.current?.animateToRegion({
+        //   ...newLocation,
+        //   latitudeDelta: 0.01,
+        //   longitudeDelta: 0.01,
+        // });
 
         // Show ride options after finding location
         setShowRideOptions(true);
-      }
+      // }
     } catch (error) {
       console.error('Geocoder error:', error);
       // You might want to show an error message to the user here

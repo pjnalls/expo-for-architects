@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import DatetimePicker from '@react-native-community/datetimepicker';
+// import DatetimePicker from '@react-native-community/datetimepicker';
 import { SetStateAction, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -39,7 +39,7 @@ export default function DataPicker({
         className="flex flex-row items-center justify-between gap-2 my-4 ml-[-10px]"
         onPress={() => {}}
       >
-        <DatetimePicker
+        {/* <DatetimePicker
           className="w-full relative z-20"
           testID="dateTimePicker"
           value={date}
@@ -50,7 +50,7 @@ export default function DataPicker({
             zIndex: 1000,
             position: 'relative',
           }}
-        />
+        /> */}
         <StatusBar style="auto" />
         <IconSymbol name="calendar" color="#888" size={36} />
       </TouchableOpacity>
