@@ -1,10 +1,14 @@
 <br/>
 <div align="center">
-   <img alt="atom with brain" src="assets/images/splash-icon.png" width="120px"/>
+   <img 
+      alt="atom with brain" 
+      src="assets/images/splash-icon.png"
+      width="240px"
+   />
 </div>
 <br/>
 <h1 align="center">
-   React Native Preply Tutorial
+   Guide to Expo for Beginners ✨
    <br/>
    <br/>
 </h1>
@@ -15,7 +19,6 @@ This project is a React Native application built with Expo that includes feature
 
 - Node.js (LTS version recommended)
 - npm or yarn
-- Expo CLI (`npm install -g expo-cli`)
 - iOS Simulator (for Mac) or Android Emulator
 
 ## Step-by-Step Build Guide

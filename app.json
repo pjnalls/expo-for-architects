@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-preply-tutorial",
-    "slug": "react-native-preply-tutorial",
+    "name": "guide-to-expo-for beginners",
+    "slug": "guide-to-expo-for beginners",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
