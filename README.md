@@ -1,25 +1,61 @@
 <br/>
 <div align="center">
    <img 
-      alt="atom with brain" 
+      alt="atom with protractor" 
       src="assets/images/splash-icon.png"
       width="240px"
    />
 </div>
-<br/>
+
 <h1 align="center">
-   Guide to Expo for Beginners ✨
-   <br/>
-   <br/>
+   Expo for Architects 📐
 </h1>
 
-This project is a React Native application built with Expo that includes features like cat facts, maps, and user registration. Below is a step-by-step guide to build the solution.
+<h3 align="center">
+An example fullstack cross-platform application with machine learning integrations for iOS, Android and the Web.
+<hr>
+</h3>
 
-## Prerequisites
+## Expo `app/` Prerequisites
 
-- Node.js (LTS version recommended)
-- npm or yarn
-- iOS Simulator (for Mac) or Android Emulator
+- `nvm` (Node Version Manager) and the long-term supported (LTS) verion of Node.js (I'm using Node 22.14), which you can download here: https://nodejs.org/en/download.
+- `npm`
+- iOS Simulator (for Mac) and/or Android Emulator OR an physical iOS or Android device with the Expo Go app installed.
+
+## Express `api/` Prerequisites
+Please see the `README.md` for setting up and running the Express and Flask APIs.
+
+## Running Entire Project
+Let's get access to the full-stack cross-platform Expo app and it's machine learning features ✨.
+
+### Starting the Project
+You are going to need two separate terminals, whether through a integrated or seperate from your code editor.
+
+#### Starting the Express API
+First, open a new terminal and navigate to the `api/` subproject from the root of this repo with the following command:
+```bash
+$ cd api
+```
+Next, once all depedencies for the the subproject are install and ready to run, run the API project with the following command:
+```bash
+api $ npm start
+```
+
+#### Starting the Expo App
+Second, in a seperate terminal in the root of this repo, run the following command:
+```bash
+$ npm start
+```
+### Running the Expo App
+
+#### On iOS
+Scan the barcode that appears (you may need to scroll back up) in the terminal for the Expo app if you have a physical iOS device, or simply press "i" if you have an iOS simulator on your Mac open.
+
+#### On Android
+Scan the barcode that appears (you may need to scroll back up) in the terminal for the Expo app if you have a physical Android device, or simply press "a" if you have an iOS simulator on your Mac open.
+
+### On the Web
+Simply press "w" if you have an iOS simulator on your Mac open.
 
 ## Step-by-Step Build Guide
 
@@ -32,12 +68,15 @@ npx create-expo-app@latest .
 
 ### 2. Install Core Dependencies
 
+#### Install NativeWind
+Follow the guide for installing and configuring NativeWind for styling available in the offical NativeWind documentation here: https://www.nativewind.dev/docs/getting-started/installation#installation-with-expo
+
+#### Install React Native Maps
 ```bash
-# Install React Native Maps
 npx expo install react-native-maps
 ```
 
-Follow [this guide](https://www.nativewind.dev/docs/getting-started/installation#installation-with-expo) for installing and configuring NativeWind for styling
+
 
 ### 3. Project Structure Setup
 
@@ -77,16 +116,6 @@ The project follows a component-based architecture with the following main featu
    - Handle JSON parameters
    - Fix request body handling
 
-### 5. Running the Application
-
-```bash
-# Install dependencies
-npm install
-
-# Start the development server
-npx expo start
-```
-
 ## Project Structure
 
 ```
@@ -123,11 +152,3 @@ If you encounter any issues:
 2. Clear the Metro bundler cache: `npx expo start -c`
 3. Check that your development environment is properly configured
 4. Verify that all required environment variables are set
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request

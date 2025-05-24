@@ -1,5 +1,5 @@
 {
-  "name": "guide-to-expo-for beginners-api",
+  "name": "expo-for-architects-api",
   "version": "0.0.1",
   "description": "a small API subproject for the React Native Preply course project",
   "main": "index.ts",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pjnalls/guide-to-expo-for beginners.git"
+    "url": "git+https://github.com/pjnalls/expo-for-architects.git"
   },
   "keywords": [
     "typescript",
@@ -18,9 +18,9 @@
   "author": "Preston Nalls",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pjnalls/guide-to-expo-for beginners/issues"
+    "url": "https://github.com/pjnalls/expo-for-architects/issues"
   },
-  "homepage": "https://github.com/pjnalls/guide-to-expo-for beginners#readme",
+  "homepage": "https://github.com/pjnalls/expo-for-architects#readme",
   "devDependencies": {
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
