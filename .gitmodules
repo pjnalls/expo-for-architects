@@ -1,0 +1,3 @@
+[submodule "api/nlp_from_scratch"]
+	path = api/nlp_from_scratch
+	url = https://github.com/pjnalls/nlp_from_scratch.git

@@ -51,7 +51,7 @@ app.post(`${NLP_PATH}/classify`, (req: Request, res: Response) => {
   try {
     const { firstName } = req.body as unknown as Cat;
     const pythonProcess = spawn('python', [
-      'nlp/nlp.py',
+      'nlp_from_scratch/nlp.py',
       '-m',
       firstName,
     ]);
