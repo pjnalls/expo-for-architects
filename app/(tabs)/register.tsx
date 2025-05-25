@@ -12,6 +12,7 @@ import DataPicker from '@/components/DataPicker';
 
 import { addCat, getCats } from '@/api/endpoints/Cat';
 import { Cat, CatBreed } from '@/types/Cat';
+import { getClassification } from '@/api/endpoints/Nlp';
 
 type RegisterationStep =
   | 'enter_info'
@@ -242,15 +243,9 @@ export default function RegisterationScreen() {
                 title="Confirm"
                 onPress={async () => {
                   const data: Cat = {
-                    firstName:
-                      inputFields.find((field) => field.label === 'First Name')
-                        ?.value ?? '',
-                    lastName:
-                      inputFields.find((field) => field.label === 'Last Name')
-                        ?.value ?? '',
-                    email:
-                      inputFields.find((field) => field.label === 'Email')
-                        ?.value ?? '',
+                    firstName: inputFields[0].value,
+                    lastName: inputFields[1].value,
+                    email: inputFields[2].value,
                     birthDate: date.toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: '2-digit',
@@ -259,7 +254,11 @@ export default function RegisterationScreen() {
                     catBreed: catBreeds ?? [],
                   };
                   await addCat(data);
-                  console.log(await getCats());
+                  console.log(
+                    `\n\n\nAI what country does the name "${data.firstName}" come from?`
+                  );
+                  const classification = await getClassification(data);
+                  console.log(classification);
                   handleRegisterationStep('success');
                 }}
               />

@@ -1,9 +1,9 @@
 import { Cat } from '@/types/Cat';
 
-const CatAPIEndpoint = 'http://localhost:3000/api/cat';
+const CatApiEndpoint = 'http://localhost:3000/api/cat';
 
 export async function getCats(): Promise<Cat[] | undefined> {
-  const json: Cat[] | undefined = await fetch(`${CatAPIEndpoint}/get-cats`)
+  const json: Cat[] | undefined = await fetch(`${CatApiEndpoint}/get-cats`)
     .then((res) => {
       if (!res.ok) {
         return undefined;
@@ -15,7 +15,7 @@ export async function getCats(): Promise<Cat[] | undefined> {
 }
 
 export async function addCat(cat: Cat): Promise<Cat | undefined> {
-  const json: Cat | undefined = await fetch(`${CatAPIEndpoint}/add-cat`, {
+  const json: Cat | undefined = await fetch(`${CatApiEndpoint}/add-cat`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

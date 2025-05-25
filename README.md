@@ -54,95 +54,21 @@ Scan the barcode that appears (you may need to scroll back up) in the terminal f
 #### On Android
 Scan the barcode that appears (you may need to scroll back up) in the terminal for the Expo app if you have a physical Android device, or simply press "a" if you have an iOS simulator on your Mac open.
 
-### On the Web
+#### On the Web
 Simply press "w" if you have an iOS simulator on your Mac open.
-
-## Step-by-Step Build Guide
-
-### 1. Initial Setup
-
-```bash
-# Create a new Expo project
-npx create-expo-app@latest .
-```
-
-### 2. Install Core Dependencies
-
-#### Install NativeWind
-Follow the guide for installing and configuring NativeWind for styling available in the offical NativeWind documentation here: https://www.nativewind.dev/docs/getting-started/installation#installation-with-expo
-
-#### Install React Native Maps
-```bash
-npx expo install react-native-maps
-```
-
-
-
-### 3. Project Structure Setup
-
-The project follows a component-based architecture with the following main features:
-
-- Cat Facts Feature
-- Registration Flow
-- Map Integration
-- API Integration
-
-### 4. Feature Implementation Order
-
-1. **Cat Facts Feature**
-
-   - Implement basic cat facts component
-   - Add infinite scroll for flat list
-   - Create checkboxes for different breeds
-   - Add search bar component
-   - Make cat facts pressable and viewable
-
-2. **UI Components**
-
-   - Add accordion component
-   - Implement reusable button component
-   - Create date picker component
-   - Add progress bar for registration
-
-3. **Registration Flow**
-
-   - Create enter, review & success subscreens
-   - Add validation to main registration form
-   - Implement map for explore screen
-
-4. **API Integration**
-   - Set up Express project
-   - Implement API endpoints
-   - Handle JSON parameters
-   - Fix request body handling
 
 ## Project Structure
 
 ```
-├── components/       # Reusable UI components
+├── api/              # Backend RESTful APIs
 ├── app/              # Main application screens
-├── api/              # Backend API implementation
-├── context/          # React Context providers
-├── types/            # Types throughout solution
-└── assets/           # Static assets
+├── assets/           # Static assets
+├── components/       # Reusable UI components
+├── contexts/         # React Context providers
+├── hooks/            # React Hook dynamic schemes
+├── scripts/          # Development utility scripts 
+└── types/            # Types throughout solution
 ```
-
-## Key Features
-
-- Cat Facts browsing with infinite scroll
-- User registration with multi-step form
-- Interactive map integration
-- Dark/Light theme support
-- Responsive UI components
-- API integration with Express backend
-
-## Development Notes
-
-- The project uses NativeWind for styling
-- React Native Maps is used for map functionality
-- Express is used for the backend API
-- The application follows a component-based architecture
-- State management is handled through React Context
 
 ## Troubleshooting
 
@@ -150,5 +76,4 @@ If you encounter any issues:
 
 1. Ensure all dependencies are properly installed
 2. Clear the Metro bundler cache: `npx expo start -c`
-3. Check that your development environment is properly configured
-4. Verify that all required environment variables are set
+3. Delete your `node_modules/` folder and reinstall the project dependencies for either the Expo app or AI subproject with the command `npm install`.
