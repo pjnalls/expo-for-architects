@@ -16,6 +16,12 @@ An example fullstack cross-platform application with machine learning integratio
 <hr>
 </h3>
 
+## Cloning Repo with Submodule
+This repo has a submodule so you'll need to clone it recursively with the following command:
+```bash
+$ git clone git@github.com:pjnalls/expo-for-architects.git --recursive
+```
+
 ## Expo `app/` Prerequisites
 
 - `nvm` (Node Version Manager) and the long-term supported (LTS) verion of Node.js (I'm using Node 22.14), which you can download here: https://nodejs.org/en/download.

@@ -13,13 +13,9 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { CatFactProvider } from '@/contexts/CatFactContext';
 
-import { ThemedView } from '@/components/ThemedView';
-
 import '@/global.css';
-import { TouchableOpacity } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import Accordion from '@/components/Accordion';
 import CatAppHeader from '@/components/feat/CatAppHeader';
+import { Colors } from '@/constants/Colors';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -44,7 +40,14 @@ export default function RootLayout() {
     <CatFactProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <CatAppHeader />
-        <Stack>
+        <Stack screenOptions={{
+          contentStyle: {
+            backgroundColor:
+              colorScheme === 'dark'
+                ? Colors.dark.background
+                : Colors.light.background,
+          },
+        }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>

@@ -1,12 +1,15 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { CatFact } from '@/types/Cat';
 import { getCatFacts } from '@/api/endpoints/vendors/CatFact';
 import { useTheme } from '@react-navigation/native';
 import { useCatFact } from '@/contexts/CatFactContext';
 import { router } from 'expo-router';
+import { Media } from '@/constants/Media';
+import { Colors } from '@/constants/Colors';
+import ThemedContainer from '@/components/ThemedContainer';
 
 export default function CatFactsScreen() {
   const { dark } = useTheme();
@@ -47,14 +50,21 @@ export default function CatFactsScreen() {
 
   const renderItem = ({ item }: { item: CatFact }) => {
     return (
-      <TouchableOpacity className="h-36 m-2 " onPress={() => handleCatFactPress(item)}>
-        <ThemedView className="h-full w-full p-4 rounded-md">
+      <TouchableOpacity
+        className="h-36 my-2"
+        onPress={() => handleCatFactPress(item)}
+      >
+        <View
+          className={`w-full h-full border-[1px] ${
+            dark ? 'bg-zinc-800 border-gray-600' : 'bg-zinc-100 border-gray-400'
+          } rounded-lg p-4`}
+        >
           <ThemedText>
             {item.fact.length > 140
               ? item.fact.slice(0, 140) + '...'
               : item.fact}
           </ThemedText>
-        </ThemedView>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -66,12 +76,14 @@ export default function CatFactsScreen() {
   };
 
   return (
-    <ThemedView
-      className="flex-1"
-      style={dark ? { backgroundColor: '#000' } : { backgroundColor: '#ddd' }}
-    >
-      <ThemedView className="h-24 p-12">
-        <ThemedText className="text-2xl font-bold">Cat Facts</ThemedText>
+    <ThemedContainer>
+      <ThemedView className="pt-36">
+        <ThemedText
+          type="title"
+          style={{ textAlign: 'center' }}
+        >
+          Cat Facts
+        </ThemedText>
       </ThemedView>
       <FlatList
         data={displayItems}
@@ -81,19 +93,6 @@ export default function CatFactsScreen() {
         ListEmptyComponent={listEmptyComponent}
         keyExtractor={(item, index) => `${item.fact}-${index}`}
       />
-    </ThemedView>
+    </ThemedContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});

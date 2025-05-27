@@ -23,10 +23,10 @@ const NLP_PATH = '/api/nlp';
 // Get all cats
 app.get(`${ROOT_PATH}/get-cats`, (_, res: Response) => {
   try {
+    console.log('[GET] Cats fetched successfully');
     res
       .status(200)
       .json({ message: 'Cats fetched successfully', data: database });
-    console.log('[GET] Cats fetched successfully');
   } catch (error) {
     res.status(500).send('Error getting cats');
   }
@@ -37,8 +37,8 @@ app.post(`${ROOT_PATH}/add-cat`, (req: Request, res: Response) => {
   try {
     const cat = req.body as unknown as Cat;
     database.push(cat);
-    res.status(201).json({ message: 'Cat added successfully', data: cat });
     console.log('[POST] Cat added successfully');
+    res.status(201).json({ message: 'Cat added successfully', data: cat });
   } catch (error) {
     res.status(500).send('Error adding cat');
   }
@@ -51,7 +51,7 @@ app.post(`${NLP_PATH}/classify`, (req: Request, res: Response) => {
   try {
     const { firstName } = req.body as unknown as Cat;
     const pythonProcess = spawn('python', [
-      'nlp_from_scratch/nlp.py',
+      'nlp_from_scratch/main.py',
       '-m',
       firstName,
     ]);
@@ -63,8 +63,8 @@ app.post(`${NLP_PATH}/classify`, (req: Request, res: Response) => {
 
     pythonProcess.on('close', (code) => {
       if (code === 0) {
-        console.log('[POST] NLP analysis completed');
-        res.send({ message: 'NLP analysis completed', data: result });
+        console.log('[POST] NLP classification completed');
+        res.send({ message: 'NLP classification completed', data: result });
       } else {
         res.status(500).send('Error analyzing text');
       }

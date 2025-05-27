@@ -1,14 +1,14 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import React, { useEffect } from 'react';
+import { Platform, useColorScheme } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ThemedView } from '@/components/ThemedView';
+import { Media } from '@/constants/Media';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -20,13 +20,16 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
+        tabBarStyle: [
+          Platform.select({
+            ios: {
+              // Use a transparent background on iOS to show the blur effect
+              position: 'absolute',
+            },
+            default: {},
+          }),
+          Media.styles.view,
+        ],
       }}
     >
       <Tabs.Screen
@@ -53,7 +56,7 @@ export default function TabLayout() {
           title: '',
           tabBarIcon: ({ color }) => (
             <ThemedView
-              className={`h-[36px] w-[36px] top-4 rounded-full items-center justify-center`}
+              className={`h-[36px] w-[36px] top-0 rounded-full items-center justify-center`}
               style={{
                 backgroundColor: colorScheme === 'dark' ? '#000' : '#ddd',
               }}
@@ -68,7 +71,11 @@ export default function TabLayout() {
         options={{
           title: 'Cat Fact',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="cat.fill" color={color} />
+            <IconSymbol
+              size={28}
+              name="chevron.left.forwardslash.chevron.right"
+              color={color}
+            />
           ),
         }}
       />
@@ -77,7 +84,7 @@ export default function TabLayout() {
         options={{
           title: 'Cat Facts',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="list.bullet" color={color} />
+            <IconSymbol size={28} name="chevron.right" color={color} />
           ),
         }}
       />

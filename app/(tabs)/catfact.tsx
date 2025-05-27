@@ -52,7 +52,7 @@ export default function CatFactScreen() {
         <IconSymbol
           size={310}
           color="#808080"
-          name="cat"
+          name="chevron.left.forwardslash.chevron.right"
           style={styles.headerImage}
         />
       }
@@ -74,6 +74,7 @@ export default function CatFactScreen() {
         <ThemedButton
           onPress={handleClassifyName}
           disabled={isLoading || !name || name.length < 3}
+          className="w-1/2 mx-auto"
           title="Classify Name"
         ></ThemedButton>
         {!isLoading && origin ? (
@@ -89,7 +90,9 @@ export default function CatFactScreen() {
           </ThemedView>
         ) : (
           <ThemedView style={{ height: 200, marginTop: 20 }}>
-            <ThemedText>{'Please enter a name and click the button.'}</ThemedText>
+            <ThemedText>
+              {'Please enter a name and click the button.'}
+            </ThemedText>
           </ThemedView>
         )}
       </ThemedView>

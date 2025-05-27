@@ -1,5 +1,7 @@
-import Maps from '@/components/Maps';
+import Maps from '@/components/feat/Maps';
 
 export default function ExploreScreen() {
-  return <Maps />;
+  return (
+      <Maps />
+  );
 }

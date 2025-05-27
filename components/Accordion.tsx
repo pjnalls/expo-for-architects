@@ -12,9 +12,11 @@ import { useTheme } from '@react-navigation/native';
 
 const Accordion = ({
   title,
+  className,
   children,
 }: {
   title: string;
+  className?: string;
   children: React.ReactNode;
 }) => {
   const [expanded, setExpanded] = useState(false);
@@ -31,7 +33,7 @@ const Accordion = ({
   });
 
   return (
-    <View className="border border-gray-300 rounded-lg m-2 z-500 overflow-hidden">
+    <View className={`border border-gray-300 rounded-lg m-2 z-500 overflow-hidden ${className}`}>
       <TouchableOpacity className="flex-row justify-between items-center p-2" onPress={toggleAccordion}>
         <ThemedText style={styles.headerText}>{title}</ThemedText>
         <Icon

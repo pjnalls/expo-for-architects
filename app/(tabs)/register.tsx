@@ -10,9 +10,9 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import CatBreeds from '@/components/feat/CatBreeds';
 import DataPicker from '@/components/DataPicker';
 
-import { addCat, getCats } from '@/api/endpoints/Cat';
+import { addCat } from '@/api/endpoints/Cat';
 import { Cat, CatBreed } from '@/types/Cat';
-import { getClassification } from '@/api/endpoints/Nlp';
+import ThemedContainer from '@/components/ThemedContainer';
 
 type RegisterationStep =
   | 'enter_info'
@@ -153,12 +153,12 @@ export default function RegisterationScreen() {
     switch (registerationStep) {
       case 'enter_info':
         return (
-          <View className="flex flex-col items-center justify-center gap-2 w-full">
+          <View className="flex flex-col items-center justify-center gap-2 w-full mb-12">
             <ThemedText type="subtitle" className="text-center">
               Enter Info
             </ThemedText>
             <ScrollView
-              className={`w-full h-1/2 my-4 border-[1px] ${
+              className={`w-full h-2/3 border-[1px] ${
                 dark
                   ? 'bg-zinc-800 border-gray-600'
                   : 'bg-zinc-100 border-gray-400'
@@ -179,15 +179,15 @@ export default function RegisterationScreen() {
                 />
                 <DataPicker date={date} setDate={setDate} />
               </View>
+              <View className="flex flex-row justify-end w-full mb-4">
+                <ThemedButton
+                  className="w-1/4"
+                  title="Next"
+                  disabled={hasError}
+                  onPress={() => handleRegisterationStep('review_and_confirm')}
+                />
+              </View>
             </ScrollView>
-            <View className="flex flex-row justify-end w-full">
-              <ThemedButton
-                className="w-1/4"
-                title="Next"
-                disabled={hasError}
-                onPress={() => handleRegisterationStep('review_and_confirm')}
-              />
-            </View>
           </View>
         );
       case 'review_and_confirm':
@@ -254,11 +254,6 @@ export default function RegisterationScreen() {
                     catBreed: catBreeds ?? [],
                   };
                   await addCat(data);
-                  console.log(
-                    `\n\n\nAI what country does the name "${data.firstName}" come from?`
-                  );
-                  const classification = await getClassification(data);
-                  console.log(classification);
                   handleRegisterationStep('success');
                 }}
               />
@@ -325,9 +320,9 @@ export default function RegisterationScreen() {
     if (registerationStep === 'enter_info') {
       return 'w-[0%]';
     } else if (registerationStep === 'review_and_confirm') {
-      return 'w-[45%]';
+      return 'w-[47%]';
     } else {
-      return 'w-[90%]';
+      return 'w-[94%]';
     }
   };
 
@@ -337,7 +332,7 @@ export default function RegisterationScreen() {
         <View
           className={`w-10 h-10 ${
             enabled ? 'bg-green-500' : 'bg-transparent'
-          } rounded-full relative top-[62px] z-50`}
+          } rounded-full relative top-[65px] z-50`}
         ></View>
         <View
           className={`w-11 h-11 ${
@@ -349,7 +344,7 @@ export default function RegisterationScreen() {
   };
 
   return (
-    <ThemedView className="flex flex-1 justify-center p-8">
+    <ThemedContainer className="flex flex-1 justify-center p-8 pt-32">
       <ThemedText type="title" className="text-center">
         Register
       </ThemedText>
@@ -361,13 +356,15 @@ export default function RegisterationScreen() {
           />
         ))}
       </View>
-      <View className={`${calculateProgress()} bg-green-500 h-3 z-50`}></View>
       <View
-        className={`w-[90%] ${
+        className={`${calculateProgress()} bg-green-500 h-3 z-50 left-2`}
+      ></View>
+      <View
+        className={`w-[94%] ${
           dark ? 'bg-green-200' : 'bg-green-800'
-        } h-4 z-10 relative bottom-[12px] mb-4`}
+        } h-4 z-10 relative bottom-[13.5px] left-[10px] mb-4`}
       ></View>
       {renderRegisterCat()}
-    </ThemedView>
+    </ThemedContainer>
   );
 }

@@ -1,4 +1,4 @@
-import { CatFact } from '@/types/CatFact';
+import { CatFact } from '@/types/Cat';
 
 const CatFactAPIEndpoint = 'https://catfact.ninja/fact';
 
