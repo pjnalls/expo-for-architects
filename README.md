@@ -24,12 +24,71 @@ $ git clone git@github.com:pjnalls/expo-for-architects.git --recursive
 
 ## Expo `app/` Prerequisites
 
+- Python 3 available for download here: https://www.python.org/downloads/
 - `nvm` (Node Version Manager) and the long-term supported (LTS) verion of Node.js (I'm using Node 22.14), which you can download here: https://nodejs.org/en/download.
 - `npm`
 - iOS Simulator (for Mac) and/or Android Emulator OR an physical iOS or Android device with the Expo Go app installed.
+- `eas` for creating Expo builds which you can install with the following command:
+```bash
+npm install -g eas-cli
+```
+
+## Installing Dependencies
+
+### Adding `app/` Dependencies
+Run the following command from the root of the project:
+```bash
+npm install
+```
+
+### Adding `api/` Dependencies
+Nativigate to the `api/` project with the following command:
+```bash
+cd api
+```
+Then, run the following command:
+```bash
+npm install
+```
+
+### Adding `api/nlp_from_scratch` Dependencies
+
+#### (Recommended) Create a virtual environment 
+
+Generate a new `.venv` with the following command:
+```bash
+python -m venv .venv
+```
+Activate the new virual environment `.venv` with the following command:
+```bash
+source .venv/bin/acitivate
+```
+
+#### Adding `api/nlp_from_scratch/` Dependencies
+```bash
+pip install -r requirements.txt
+```
 
 ## Express `api/` Prerequisites
 Please see the `README.md` for setting up and running the Express and Flask APIs.
+
+## ⚠️ Development Builds Needed for Expo Maps ⚠️
+***IMPORTANT NOTE: You need to run development builds for iOS and Android to get Expo Maps to work***
+
+Make a development build for iOS devices run with the command below:
+```bash
+eas build --platform ios --profile development
+```
+
+Make a development build for Android devices run with the command below:
+```bash
+eas build --platform android --profile development
+```
+
+Make a development build for all platforms run with the command below:
+```bash
+eas build --platform ios --profile development
+```
 
 ## Running Entire Project
 Let's get access to the full-stack cross-platform Expo app and it's machine learning features ✨.

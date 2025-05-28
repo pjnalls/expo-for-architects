@@ -1,196 +1,305 @@
-import {
-  ActivityIndicator,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useEffect, useRef, useState } from 'react';
-import MapView, { Marker } from 'react-native-maps';
-import { ThemedView } from '../ThemedView';
-import ThemedButton from '../ThemedButton';
-import { ThemedText } from '../ThemedText';
-import { IconSymbol } from '../ui/IconSymbol';
-import { useTheme } from '@react-navigation/native';
+import React, { useRef, useState } from "react";
+import { Alert, Button, Platform, StyleSheet, Text, View } from "react-native";
+// import { AppleMaps, GoogleMaps } from "expo-maps";
+import { AppleMaps } from "expo-maps";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useBottomTabOverflow } from "@/components/ui/TabBarBackground";
+import { locationList } from "@/scripts/location-list";
+import { useImage } from "expo-image";
+import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
+import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
+
+const SF_ZOOM = 12;
 
 export default function Maps() {
-  const { dark } = useTheme();
-  const [searchText, setSearchText] = useState('');
-  const [showRideOptions, setShowRideOptions] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const bottom = useBottomTabOverflow();
+  const [locationIndex, setLocationIndex] = useState(0);
+  const ref = useRef<AppleMaps.MapView>(null);
 
-  const [pickupLocation] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
+  const image = useImage("https://picsum.photos/128", {
+    onError(error) {
+      console.error(error);
+    },
   });
-  const [dropoffLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-  const mapRef = useRef<MapView>(null);
 
-  useEffect(() => {
-    // Geocoder.init(GOOGLE_MAPS_API_KEY);
-  }, []);
-
-  const handleSearchTextChange = (text: string) => {
-    setSearchText(text);
+  const cameraPosition = {
+    coordinates: {
+      latitude: locationList[locationIndex].stores[0].point[0],
+      longitude: locationList[locationIndex].stores[0].point[1],
+    },
+    zoom: SF_ZOOM,
   };
 
-  const handleSearch = async (text: string) => {
-    if (text.length < 3) return; // Don't search for very short queries
+  function handleChangeWithRef(direction: "next" | "prev") {
+    const newIndex = locationIndex + (direction === "next" ? 1 : -1);
+    const nextLocation = locationList[newIndex];
 
-    setIsLoading(true);
-    try {
-      // const response = await Geocoder.from(text)
-      //   .then((data) => data)
-      //   .catch(() => {
-      //     return null;
-      //   });
-
-      // if (!response) return;
-      // const { results } = response;
-
-      // if (results && results.length > 0) {
-      //   const { location } = results[0].geometry;
-      //   const newLocation = {
-      //     latitude: location.lat,
-      //     longitude: location.lng,
-      //   };
-
-      // setDropoffLocation(newLocation);
-
-      // // Animate map to the new location
-      // mapRef.current?.animateToRegion({
-      //   ...newLocation,
-      //   latitudeDelta: 0.01,
-      //   longitudeDelta: 0.01,
-      // });
-
-      // Show ride options after finding location
-      setShowRideOptions(true);
-      // }
-    } catch (error) {
-      console.error('Geocoder error:', error);
-      // You might want to show an error message to the user here
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const moveToCurrentLocation = () => {
-    mapRef.current?.animateToRegion({
-      latitude: pickupLocation.latitude,
-      longitude: pickupLocation.longitude,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
+    // Set camera position first to ensure animation happens
+    ref.current?.setCameraPosition({
+      coordinates: {
+        latitude: nextLocation.stores[0].point[0],
+        longitude: nextLocation.stores[0].point[1],
+      },
+      zoom: SF_ZOOM,
     });
-  };
 
-  useEffect(() => {
-    moveToCurrentLocation();
-  }, [pickupLocation]);
+    // Update state after animation is triggered
+    setLocationIndex(newIndex);
+  }
 
-  return (
-      <ThemedView className="flex flex-1 max-w-3xl mx-auto w-full">
-        <MapView
-          ref={mapRef}
-          style={styles.map}
-          initialRegion={{
-            latitude: pickupLocation.latitude,
-            longitude: pickupLocation.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-          }}
-          showsUserLocation={true}
-          showsMyLocationButton={false}
-        >
-          <Marker
-            coordinate={pickupLocation}
-            title="Pickup Location"
-            pinColor="blue"
-          />
-          {dropoffLocation && (
-            <Marker
-              coordinate={dropoffLocation}
-              title="Dropoff Location"
-              pinColor="red"
-            />
-          )}
-        </MapView>
-        {/* Search Bar */}
-        <View className="absolute top-4 left-4 right-4">
-          <View
-            className={`flex-row items-center bg-white rounded-lg shadow-lg p-2 ${
-              dark ? 'bg-zinc-800' : 'bg-white'
-            }`}
-          >
-            <IconSymbol
-              name="magnifyingglass"
-              color={dark ? '#aaa' : '#667'}
-              size={20}
-            />
-            <TextInput
-              className={`flex-1 ml-2 ${dark ? 'text-white' : 'text-black'}`}
-              placeholder="Where to?"
-              placeholderTextColor={dark ? '#aaa' : '#667'}
-              value={searchText}
-              onChangeText={handleSearchTextChange}
-            />
-            {isLoading && <ActivityIndicator size="small" color="#333" />}
-          </View>
-        </View>
+  const renderMapControls = () => (
+    <>
+      <View style={{ flex: 8 }} pointerEvents="none" />
 
-        {/* Current Location Button */}
-        <TouchableOpacity
-          className="absolute bottom-32 right-4 bg-white rounded-full p-3 shadow-lg"
-          onPress={moveToCurrentLocation}
-        >
-          <IconSymbol name="location.fill" color={'#000'} size={24} />
-        </TouchableOpacity>
+      <View style={styles.controlsContainer} pointerEvents="auto">
+        {/* 1 */}
+        <Button title="Prev" onPress={() => handleChangeWithRef("prev")} />
+        <Button title="Next" onPress={() => handleChangeWithRef("next")} />
 
-        {/* Current Location Button */}
-        <TouchableOpacity
-          className="absolute bottom-32 right-24 bg-white rounded-full p-3 shadow-lg"
-          onPress={() => handleSearch(searchText)}
-        >
-          <IconSymbol name="magnifyingglass" color={'#000'} size={24} />
-        </TouchableOpacity>
-
-        {/* Ride Options Bottom Sheet */}
-        {showRideOptions && (
-          <ThemedView
-            className={`absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl p-4 ${
-              dark ? 'bg-zinc-800' : 'bg-white'
-            }`}
-          >
-            <View className="w-12 h-1 bg-gray-300 rounded-full self-center mb-4" />
-            <ThemedText className="text-xl font-bold mb-4">
-              Choose a ride
-            </ThemedText>
-            <View className="flex-row justify-between items-center mb-4">
-              <View>
-                <ThemedText className="text-lg">UberX</ThemedText>
-                <ThemedText className="text-sm text-gray-500">
-                  5 min away
-                </ThemedText>
-              </View>
-              <ThemedText className="text-lg font-bold">$15.00</ThemedText>
-            </View>
-            <ThemedButton
-              title="Request UberX"
-              onPress={() => setShowRideOptions(false)}
-              className="w-full"
-            />
-          </ThemedView>
-        )}
-      </ThemedView>
+        {/* 2 */}
+        {/* <Button
+          title="Set random"
+          onPress={() =>
+            ref.current?.setCameraPosition({
+              coordinates: {
+                latitude: Math.random() * 360 - 180,
+                longitude: Math.random() * 360 - 180,
+              },
+              zoom: 1,
+            })
+          }
+        /> */}
+      </View>
+    </>
   );
+
+  if (Platform.OS === "ios") {
+    return (
+      <>
+        <AppleMaps.View
+          ref={ref}
+          style={StyleSheet.absoluteFill}
+          cameraPosition={cameraPosition}
+          properties={{
+            isTrafficEnabled: false,
+            mapType: AppleMapsMapType.STANDARD,
+            selectionEnabled: true,
+          }}
+          // 3
+          markers={markersApple}
+          // 4
+          //ios only
+          annotations={[
+            {
+              coordinates: { latitude: 37.8199, longitude: -122.4783 },
+              title: "Expo HQ",
+              text: "Expo HQ",
+              textColor: "white",
+              backgroundColor: "black",
+              icon: image ? image : undefined,
+            },
+          ]}
+          // 5
+          polylines={[
+            {
+              color: "blue",
+              width: 5,
+              coordinates: polylineCoordinates,
+            },
+          ]}
+          // onPolylineClick={(event) => {
+          //   console.log(event);
+          //   Alert.alert("Polyline clicked", JSON.stringify(event));
+          // }}
+
+          onMapClick={(e) => {
+            console.log(
+              JSON.stringify({ type: "onMapClick", data: e }, null, 2)
+            );
+          }}
+          onMarkerClick={(e) => {
+            console.log(
+              JSON.stringify({ type: "onMarkerClick", data: e }, null, 2)
+            );
+          }}
+          onCameraMove={(e) => {
+            console.log(
+              JSON.stringify({ type: "onCameraMove", data: e }, null, 2)
+            );
+          }}
+        />
+        <SafeAreaView
+          style={{ flex: 1, paddingBottom: bottom }}
+          pointerEvents="box-none"
+        >
+          {renderMapControls()}
+        </SafeAreaView>
+      </>
+    );
+  } 
+  // else if (Platform.OS === "android") {
+  //   return (
+  //     <>
+  //       <GoogleMaps.View
+  //         ref={ref}
+  //         style={StyleSheet.absoluteFill}
+  //         cameraPosition={cameraPosition}
+  //         properties={{
+  //           isBuildingEnabled: true,
+  //           isIndoorEnabled: true,
+  //           mapType: GoogleMapsMapType.TERRAIN,
+  //           selectionEnabled: true,
+  //           isMyLocationEnabled: false, // requires location permission
+  //           isTrafficEnabled: true,
+  //           // minZoomPreference: 1,
+  //           // maxZoomPreference: 20,
+  //         }}
+  //         // 3
+  //         polylines={[
+  //           {
+  //             color: "red",
+  //             width: 20,
+  //             coordinates: polylineCoordinates,
+  //           },
+  //         ]}
+  //         // 4
+  //         markers={markersGoogle}
+  //         onPolylineClick={(event) => {
+  //           console.log(event);
+  //           Alert.alert("Polyline clicked", JSON.stringify(event));
+  //         }}
+  //         onMapLoaded={() => {
+  //           console.log(JSON.stringify({ type: "onMapLoaded" }, null, 2));
+  //         }}
+  //         onMapClick={(e) => {
+  //           console.log(
+  //             JSON.stringify({ type: "onMapClick", data: e }, null, 2)
+  //           );
+  //         }}
+  //         onMapLongClick={(e) => {
+  //           console.log(
+  //             JSON.stringify({ type: "onMapLongClick", data: e }, null, 2)
+  //           );
+  //         }}
+  //         onPOIClick={(e) => {
+  //           console.log(
+  //             JSON.stringify({ type: "onPOIClick", data: e }, null, 2)
+  //           );
+  //         }}
+  //         onMarkerClick={(e) => {
+  //           console.log(
+  //             JSON.stringify({ type: "onMarkerClick", data: e }, null, 2)
+  //           );
+  //         }}
+  //         onCameraMove={(e) => {
+  //           console.log(
+  //             JSON.stringify({ type: "onCameraMove", data: e }, null, 2)
+  //           );
+  //         }}
+  //       />
+  //       {renderMapControls()}
+  //     </>
+  //   );
+  // } 
+  else {
+    return <Text>Maps are only available on Android and iOS</Text>;
+  }
 }
 
 const styles = StyleSheet.create({
-  map: {
-    width: '100%',
-    height: '100%',
+  controlsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
+
+const markersGoogle = [
+  {
+    coordinates: { latitude: 49.259133, longitude: -123.10079 },
+    title: "49th Parallel Café & Lucky's Doughnuts - Main Street",
+    snippet: "49th Parallel Café & Lucky's Doughnuts - Main Street",
+    draggable: true,
+  },
+  {
+    coordinates: { latitude: 49.268034, longitude: -123.154819 },
+    title: "49th Parallel Café & Lucky's Doughnuts - 4th Ave",
+    snippet: "49th Parallel Café & Lucky's Doughnuts - 4th Ave",
+    draggable: true,
+  },
+  {
+    coordinates: { latitude: 49.286036, longitude: -123.12303 },
+    title: "49th Parallel Café & Lucky's Doughnuts - Thurlow",
+    snippet: "49th Parallel Café & Lucky's Doughnuts - Thurlow",
+    draggable: true,
+  },
+  {
+    coordinates: { latitude: 49.311879, longitude: -123.079241 },
+    title: "49th Parallel Café & Lucky's Doughnuts - Lonsdale",
+    snippet: "49th Parallel Café & Lucky's Doughnuts - Lonsdale",
+    draggable: true,
+  },
+  {
+    coordinates: {
+      latitude: 49.27235336018808,
+      longitude: -123.13455838338278,
+    },
+    title: "A La Mode Pie Café - Granville Island",
+    snippet: "A La Mode Pie Café - Granville Island",
+    draggable: true,
+  },
+];
+
+const markersApple = [
+  {
+    coordinates: { latitude: 49.259133, longitude: -123.10079 },
+    title: "49th Parallel Café & Lucky's Doughnuts - Main Street",
+    tintColor: "brown",
+    systemImage: "cup.and.saucer.fill",
+  },
+  {
+    coordinates: { latitude: 49.268034, longitude: -123.154819 },
+    title: "49th Parallel Café & Lucky's Doughnuts - 4th Ave",
+    tintColor: "brown",
+    systemImage: "cup.and.saucer.fill",
+  },
+  {
+    coordinates: { latitude: 49.286036, longitude: -123.12303 },
+    title: "49th Parallel Café & Lucky's Doughnuts - Thurlow",
+    tintColor: "brown",
+    systemImage: "cup.and.saucer.fill",
+  },
+  {
+    coordinates: { latitude: 49.311879, longitude: -123.079241 },
+    title: "49th Parallel Café & Lucky's Doughnuts - Lonsdale",
+    tintColor: "brown",
+    systemImage: "cup.and.saucer.fill",
+  },
+  {
+    coordinates: {
+      latitude: 49.27235336018808,
+      longitude: -123.13455838338278,
+    },
+    title: "A La Mode Pie Café - Granville Island",
+    tintColor: "orange",
+    systemImage: "fork.knife",
+  },
+];
+const polylineCoordinates = [
+  { latitude: 33.8121, longitude: -117.919 }, // Disneyland
+  { latitude: 33.837, longitude: -117.912 },
+  { latitude: 33.88, longitude: -117.9 },
+  { latitude: 33.9456, longitude: -117.8735 },
+  { latitude: 34.0, longitude: -117.85 },
+  { latitude: 34.05, longitude: -117.82 },
+  { latitude: 34.1, longitude: -117.78 },
+  { latitude: 34.2, longitude: -118.0 },
+  { latitude: 34.2222, longitude: -118.1234 },
+  { latitude: 34.233, longitude: -118.2 },
+  { latitude: 34.2355, longitude: -118.3 },
+  { latitude: 34.1367, longitude: -118.2942 }, // Hollywood
+  { latitude: 34.1341, longitude: -118.3215 }, // Hollywood Sign
+];

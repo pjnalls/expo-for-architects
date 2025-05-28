@@ -1,6 +1,5 @@
 import ThemedContainer from '../ThemedContainer';
 import { ThemedText } from '../ThemedText';
-import { ThemedView } from '../ThemedView';
 
 export default function Maps() {
   return (
