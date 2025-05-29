@@ -87,7 +87,7 @@ eas build --platform android --profile development
 
 Make a development build for all platforms run with the command below:
 ```bash
-eas build --platform ios --profile development
+eas build --platform all --profile development
 ```
 
 ## Running Entire Project
@@ -99,17 +99,17 @@ You are going to need two separate terminals, whether through a integrated or se
 #### Starting the Express API
 First, open a new terminal and navigate to the `api/` subproject from the root of this repo with the following command:
 ```bash
-$ cd api
+cd api
 ```
 Next, once all depedencies for the the subproject are install and ready to run, run the API project with the following command:
 ```bash
-api $ npm start
+npm start
 ```
 
 #### Starting the Expo App
 Second, in a seperate terminal in the root of this repo, run the following command:
 ```bash
-$ npm start
+npm start
 ```
 ### Running the Expo App
 
