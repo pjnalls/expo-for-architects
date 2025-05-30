@@ -23,7 +23,13 @@
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "package": "com.pjnalls.expoforarchitects",
+      "config": {
+        "googleMaps": {
+          "apiKey": "your-api-key-here"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
@@ -46,6 +52,12 @@
         {
           "requestLocationPermission": "true",
           "locationPermission": "Allow $(PRODUCT_NAME) to use your location"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
     ],

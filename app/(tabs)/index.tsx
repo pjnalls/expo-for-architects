@@ -15,7 +15,7 @@ export default function HomeScreen() {
   const { catFact } = useCatFact();
 
   const handleExploreCatFacts = () => {
-    router.push({ pathname: '/catfact', params: { catFact: catFact?.fact } });
+    router.push({ pathname: '/catfacts', params: { catFact: catFact?.fact } });
   };
 
   return (

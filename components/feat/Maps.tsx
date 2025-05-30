@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Alert, Button, Platform, StyleSheet, Text, View } from "react-native";
-// import { AppleMaps, GoogleMaps } from "expo-maps";
-import { AppleMaps } from "expo-maps";
+import { AppleMaps, GoogleMaps } from "expo-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useBottomTabOverflow } from "@/components/ui/TabBarBackground";
 import { locationList } from "@/scripts/location-list";
@@ -137,70 +136,70 @@ export default function Maps() {
       </>
     );
   } 
-  // else if (Platform.OS === "android") {
-  //   return (
-  //     <>
-  //       <GoogleMaps.View
-  //         ref={ref}
-  //         style={StyleSheet.absoluteFill}
-  //         cameraPosition={cameraPosition}
-  //         properties={{
-  //           isBuildingEnabled: true,
-  //           isIndoorEnabled: true,
-  //           mapType: GoogleMapsMapType.TERRAIN,
-  //           selectionEnabled: true,
-  //           isMyLocationEnabled: false, // requires location permission
-  //           isTrafficEnabled: true,
-  //           // minZoomPreference: 1,
-  //           // maxZoomPreference: 20,
-  //         }}
-  //         // 3
-  //         polylines={[
-  //           {
-  //             color: "red",
-  //             width: 20,
-  //             coordinates: polylineCoordinates,
-  //           },
-  //         ]}
-  //         // 4
-  //         markers={markersGoogle}
-  //         onPolylineClick={(event) => {
-  //           console.log(event);
-  //           Alert.alert("Polyline clicked", JSON.stringify(event));
-  //         }}
-  //         onMapLoaded={() => {
-  //           console.log(JSON.stringify({ type: "onMapLoaded" }, null, 2));
-  //         }}
-  //         onMapClick={(e) => {
-  //           console.log(
-  //             JSON.stringify({ type: "onMapClick", data: e }, null, 2)
-  //           );
-  //         }}
-  //         onMapLongClick={(e) => {
-  //           console.log(
-  //             JSON.stringify({ type: "onMapLongClick", data: e }, null, 2)
-  //           );
-  //         }}
-  //         onPOIClick={(e) => {
-  //           console.log(
-  //             JSON.stringify({ type: "onPOIClick", data: e }, null, 2)
-  //           );
-  //         }}
-  //         onMarkerClick={(e) => {
-  //           console.log(
-  //             JSON.stringify({ type: "onMarkerClick", data: e }, null, 2)
-  //           );
-  //         }}
-  //         onCameraMove={(e) => {
-  //           console.log(
-  //             JSON.stringify({ type: "onCameraMove", data: e }, null, 2)
-  //           );
-  //         }}
-  //       />
-  //       {renderMapControls()}
-  //     </>
-  //   );
-  // } 
+  else if (Platform.OS === "android") {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <GoogleMaps.View
+          ref={ref}
+          style={{width: "80%", height: "80%"}}
+          cameraPosition={cameraPosition}
+          properties={{
+            isBuildingEnabled: true,
+            isIndoorEnabled: true,
+            mapType: GoogleMapsMapType.TERRAIN,
+            selectionEnabled: true,
+            isMyLocationEnabled: true, // requires location permission
+            isTrafficEnabled: true,
+            // minZoomPreference: 1,
+            // maxZoomPreference: 20,
+          }}
+          // 3
+          polylines={[
+            {
+              color: "red",
+              width: 20,
+              coordinates: polylineCoordinates,
+            },
+          ]}
+          // 4
+          markers={markersGoogle}
+          onPolylineClick={(event) => {
+            console.log(event);
+            Alert.alert("Polyline clicked", JSON.stringify(event));
+          }}
+          onMapLoaded={() => {
+            console.log(JSON.stringify({ type: "onMapLoaded" }, null, 2));
+          }}
+          onMapClick={(e) => {
+            console.log(
+              JSON.stringify({ type: "onMapClick", data: e }, null, 2)
+            );
+          }}
+          onMapLongClick={(e) => {
+            console.log(
+              JSON.stringify({ type: "onMapLongClick", data: e }, null, 2)
+            );
+          }}
+          onPOIClick={(e) => {
+            console.log(
+              JSON.stringify({ type: "onPOIClick", data: e }, null, 2)
+            );
+          }}
+          onMarkerClick={(e) => {
+            console.log(
+              JSON.stringify({ type: "onMarkerClick", data: e }, null, 2)
+            );
+          }}
+          onCameraMove={(e) => {
+            console.log(
+              JSON.stringify({ type: "onCameraMove", data: e }, null, 2)
+            );
+          }}
+        />
+        {renderMapControls()}
+      </View>
+    );
+  } 
   else {
     return <Text>Maps are only available on Android and iOS</Text>;
   }
