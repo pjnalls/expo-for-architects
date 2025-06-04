@@ -18,7 +18,7 @@ An example fullstack cross-platform application with machine learning integratio
 
 ## Tutorial for This Project
 
-Please feel free to use the tutorial available [here](00_overview_of_expo_for_architects.md) for this project to get use to the entire full-stack cross-platform machine learning application.
+Please feel free to use the tutorial available [here](tutorial/00_overview_of_expo_for_architects.md) for this project to get use to the entire full-stack cross-platform machine learning application.
 
 ## Cloning Repo with Submodule
 This repo has a submodule so you'll need to clone it recursively with the following command:
