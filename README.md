@@ -16,6 +16,10 @@ An example fullstack cross-platform application with machine learning integratio
 <hr>
 </h3>
 
+## Tutorial for This Project
+
+Please feel free to use the tutorial available [here](00_overview_of_expo_for_architects.md) for this project to get use to the entire full-stack cross-platform machine learning application.
+
 ## Cloning Repo with Submodule
 This repo has a submodule so you'll need to clone it recursively with the following command:
 ```bash
@@ -142,3 +146,4 @@ If you encounter any issues:
 1. Ensure all dependencies are properly installed
 2. Clear the Metro bundler cache: `npx expo start -c`
 3. Delete your `node_modules/` folder and reinstall the project dependencies for either the Expo app or AI subproject with the command `npm install`.
+
