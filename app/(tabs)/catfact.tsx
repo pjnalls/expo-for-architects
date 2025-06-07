@@ -41,7 +41,8 @@ export default function CatFactScreen() {
 
     setIsLoading(true);
     const origin = await getClassification(cat);
-    setOrigin(origin ?? 'Unknown');
+    console.log('origin', origin);
+    setOrigin(origin?.data ?? 'Unknown');
     setIsLoading(false);
   };
 

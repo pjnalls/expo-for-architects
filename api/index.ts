@@ -5,12 +5,18 @@
  * for local development only.
  *****************************************/
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { spawn } from 'child_process';
 import { Cat } from '@/types/Cat';
 
 const app = express();
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: 'http://localhost:8081',
+  })
+);
 
 const database: Cat[] = [];
 
@@ -49,6 +55,8 @@ app.post(`${ROOT_PATH}/add-cat`, (req: Request, res: Response) => {
  *****************************************/
 app.post(`${NLP_PATH}/classify`, (req: Request, res: Response) => {
   try {
+    res.header('Access-Control-Allow-Origin', '*');
+    console.log('req', req.body);
     const { firstName } = req.body as unknown as Cat;
     const pythonProcess = spawn('python', [
       'nlp_from_scratch/main.py',
